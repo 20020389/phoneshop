@@ -1,24 +1,21 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import './App.css';
-import Header1 from './components/header1'
-import Body from "./components/body";
-import End from "./components/end";
 
-function App(){
-  
-  // return (
-  //   <div className="wrapper">
-  //      <div className="wrap2">
-  //           <Header1></Header1>
-  //           <Body></Body>
-  //           <End></End>
-  //      </div>
-  //   </div>
-  // )
+import { Route, Routes } from 'react-router-dom';
 
-  return <>
-    
-  </>
+import Home from './pages/Home';
+import { PhoneCard } from './components/PhoneCard';
+
+function App() {
+  //
+
+  return (
+    <Routes>
+      <Route path="/test" element={<PhoneCard name={'string'} />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/*" element={<div>404 not found</div>} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
