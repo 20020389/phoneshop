@@ -31,7 +31,7 @@ function Body() {
         {new Array(25)
           .fill({
             image: '/image/ip14.webp',
-            url: '/test',
+            url: '/product',
             name: 'Iphone14 Promax',
             price: '40.000.000đ',
           })

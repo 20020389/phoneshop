@@ -1,4 +1,4 @@
-import { Button, Stack } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
 
 
 function But(props){
@@ -6,8 +6,8 @@ function But(props){
         <Button 
         width='100px'
         height='30px'
-        backgroundColor='rgb(222, 222, 178)'
-        color='black'
+        bg='grey'
+        color='aliceblue'
         border='none'
         marginTop='3px'
         marginLeft='10px'

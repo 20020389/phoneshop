@@ -1,12 +1,13 @@
 .header{
     width: 100%;
-    height: 500px;
+    height: 96px;
     /* background-color: rgb(215, 250, 217);    */
 }
 .header1{
     width: 100%;
     height: 35px;
 }
+
 #sdt,#address,#sign1,#sign2{
     float: left;
     font-size: 20px;
@@ -54,12 +55,15 @@
     height: 60px;
     background-color: blanchedalmond;
 }
+
 #logo,#search{
     height: 100%;
     float: left;
 }
 #logo{
     width: 22%;
+    height: 100%;
+    cursor: pointer;
 }
 
 #imgLogo{
@@ -78,11 +82,11 @@
     height: 100%;
     float: left;
     text-align: center;
-}
-#NameLogo>h2{
     font-size: 22px;
     margin-left: 10px;
-    color: red;
+    margin-top: 16px;
+    font-weight: 800;
+    color: brown;
 }
 #search{
     width: 30%;
@@ -99,44 +103,4 @@
     margin-top: 16.5px;
 }
 
-.header3{
-    margin-top: 2.5px;
-    width: 100%;
-    height: 400px;
-    background-color: blueviolet;
-}
-#Left{
-    float: left;
-    width: 60%;
-    height: 100%;
-    background-image: url(../../public/image/Left.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;  
-}
-#Right{
-    float: left;
-    width: 40%;
-    height: 100%;
-    background-color: rgb(174, 192, 192);
-}
-#top,#mid,#bot{
-    position: relative;
-    width: 100%;
-    height: 33%;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-#top{
-    background-color: rgb(231, 132, 13);
-    background-image: url(../../public/image/top.png);
-}
-#mid{
-    margin-top: 1px;
-    background-color: brown;
-    background-image: url(../../public/image/mid.jpg);
-}
-#bot{
-    margin-top: 1px;
-    background-color: yellowgreen;
-    background-image: url(../../public/image/bot.jpg);
-}
+

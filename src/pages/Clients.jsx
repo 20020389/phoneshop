@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
-import End from "../components/end";
 import Header1 from "../components/header1";
-import Registerr from "../components/Registerr";
- export default function Register(){
-    return (
+import Client from "../components/Client";
+import End from "../components/end";
+export default function Clients(){
+    return(
         <Box 
      width='100vw'
      height='100vh'
@@ -14,11 +14,11 @@ import Registerr from "../components/Registerr";
          position={'relative'}
          left={'2.5%'}
         >
-            <Header1></Header1> 
-            <Registerr namee="Đăng kí"></Registerr>
+            <Header1 ></Header1> 
+            <Client></Client>
             <End></End>  
         </Box>
          
     </Box>
     )
- }
+}

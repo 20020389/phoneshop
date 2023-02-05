@@ -49,15 +49,15 @@ function End() {
           //  backgroundColor='white'
         >
           <Box width="80%" height="100%" marginLeft="18%">
-            <b fontSize="20px">Hà Nội</b>
+            <b>Hà Nội</b>
             <br />
-            <span fontSize="15px">120 Thái Hà, Q. Đống Đa</span>
+            <span >120 Thái Hà, Q. Đống Đa</span>
             <br />
             <span>Điện thoại: 0969.120.120 (Bán hàng)</span>
             <br />
             <span>Kỹ thuật: 0123456789</span>
             <br />
-            <span fontSize="15px">398 Cầu Giấy, Q. Cầu Giấy</span>
+            <span >398 Cầu Giấy, Q. Cầu Giấy</span>
             <br />
             <span>Điện thoại: 096.1111.398-037.437.9999 </span>
             <br />
@@ -69,16 +69,16 @@ function End() {
           height="150px"
           //  backgroundColor='white'
         >
-          <Box width="80%" height="100%" marginLeft="18%" bg="red">
-            <b fontSize="20px">Hồ Chí Minh</b>
+          <Box width="80%" height="100%" marginLeft="18%" >
+            <b >Hồ Chí Minh</b>
             <br />
-            <span fontSize="15px">123 Trần Quang Khải, Q.1</span>
+            <span >123 Trần Quang Khải, Q.1</span>
             <br />
             <span>Điện thoại: 0965.123.123(Bán hàng)</span>
             <br />
             <span>Kỹ thuật: 0969.520.520</span>
             <br />
-            <span fontSize="15px">602 Lê Hồng Phong, P.10, Q.10</span>
+            <span >602 Lê Hồng Phong, P.10, Q.10</span>
             <br />
             <span>097.1111.602-097.3333.602</span>
             <br />

@@ -12,9 +12,16 @@
   height: 100vh;
 }
 .wrap2 {
+  width: 100%;
+  height: 100%;
+  /* background-color: rgb(231, 228, 225); */
+  /* position: relative;
+  left: 2.5%; */
+}
+.wrap3 {
   width: 95%;
   height: 100%;
-  /* background-color: aqua; */
+  /* background-color: rgb(235, 157, 54); */
   position: relative;
   left: 2.5%;
 }

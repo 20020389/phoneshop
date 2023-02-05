@@ -9,7 +9,7 @@ function Div(props) {
         <div id="imge">
           <img src={props.image} alt="" />
         </div>
-        <div id="wrap"></div>
+        {/* <div id="wrap"></div> */}
         <div id="namePr">
           <span>{props.NamePr}</span>
         </div>
@@ -20,7 +20,7 @@ function Div(props) {
           <But Name="Mua Ngay"></But>
         </div>
       </div>
-    </Link>
+     </Link>
   );
 }
 export default Div;
