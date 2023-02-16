@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import { Button } from '@chakra-ui/react';
 import '../CSS/div.css';
-import But from './button';
+// import But from './button';
 
 function Div(props) {
   return (
@@ -17,7 +18,7 @@ function Div(props) {
           <span>{props.PricePr}</span>
         </div>
         <div id="buy">
-          <But Name="Mua Ngay"></But>
+          <Button border={'none'} outline= '0 !important' width={'90%'} height='30px' bg={'rgb(250,127,19)'} color='aliceblue'> Mua ngay </Button>
         </div>
       </div>
      </Link>

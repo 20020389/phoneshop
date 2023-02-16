@@ -4,8 +4,6 @@ import { Box, Text, Input, Button, Link } from "@chakra-ui/react";
 export default function Registerr(props){
 
        const SignUp = (e)=>{
-           
-
        }
 
        return(

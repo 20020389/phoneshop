@@ -2,7 +2,8 @@ import Header1 from '../components/header1';
 import Header2 from '../components/header2';
 import Body from '../components/body';
 import End from '../components/end';
-
+import ChoosePr from '../components/ChoosePr';
+import Bar from '../components/bar';
 export default function Home() {
   return (
     <div className="wrapper">
@@ -11,6 +12,9 @@ export default function Home() {
             
          <div className="wrap3">
             <Header2></Header2>
+            <ChoosePr></ChoosePr>
+            <Body></Body>
+            <Bar></Bar>
             <Body></Body>
             <End></End>
          </div>

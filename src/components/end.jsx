@@ -105,7 +105,7 @@ function End() {
             width="30px"
             height="30px"
             // backgroundColor='pink'
-            backgroundImage="url(/image/location3.png)"
+            backgroundImage="url(/image/what.png)"
             backgroundSize="cover"
           ></Box>
           <Box
@@ -158,8 +158,8 @@ function End() {
             left="16%"
             width="30px"
             height="30px"
-            backgroundColor="pink"
-            backgroundImage="url(/image/location3.png)"
+            // backgroundColor="pink"
+            backgroundImage="url(/image/call2.png)"
             backgroundSize="cover"
           ></Box>
           <Box

@@ -1,32 +1,14 @@
 import React from 'react';
 
-import But from './button';
 import Div from './div';
 import '../CSS/body.css';
 import { useNavigate } from 'react-router-dom';
 
 function Body() {
-  const navigation = useNavigate();
+  // const navigation = useNavigate();
 
   return (
     <div className="body">
-      <div className="headBody">
-        <But Name="Apple"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-        <But Name="Samsung"></But>
-      </div>
-      <div className="ourPr">
-        <h2>OUR PRODUCT</h2>
-      </div>
       <div className="product">
         {new Array(25)
           .fill({
