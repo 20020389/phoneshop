@@ -1,14 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
   box-sizing: border-box;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Roboto', Times, serif;
+}
+
+#root {
+  width: 100%;
 }
 
 .wrapper {
-  width: 100vw;
   height: 100vh;
 }
 .wrap2 {

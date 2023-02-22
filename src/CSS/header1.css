@@ -1,106 +1,111 @@
-.header{
-    width: 100%;
-    height: 96px;
-    /* background-color: rgb(215, 250, 217);    */
+.header {
+  width: 100%;
+  height: 96px;
+  /* background-color: rgb(215, 250, 217);    */
 }
-.header1{
-    width: 100%;
-    height: 35px;
-}
-
-#sdt,#address,#sign1,#sign2{
-    float: left;
-    font-size: 20px;
-    height: 100%;
-}
-#sdt{
-    width: 20%;
-    margin-left: 10px;
-}
-#so{
-    color: rgb(144, 83, 3);
+.header1 {
+  width: 100%;
+  height: 35px;
 }
 
-#sdt>span,#address>span,#sign1>a,#sign2>a{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    margin-left: 10px;
-    margin-top: 5px;
+#sdt,
+#address,
+#sign1,
+#sign2 {
+  float: left;
+  font-size: 20px;
+  height: 100%;
+}
+#sdt {
+  width: 20%;
+}
+#so {
+  color: rgb(144, 83, 3);
 }
 
-#address{
-    width: 40%;
-    margin-left: 10%;
-}
-#DChi{
-    color: rgb(144, 83, 3);
-}
-#sign1{
-    margin-left: 10%;
-    width: 5%;
-}
-#sign1,#sign2{
-    float: left;
-}
-#sign2{
-    width: 7%;
-}
-#sign>a{
-    float: left;
+#sdt > span,
+#address > span,
+#sign1 > a,
+#sign2 > a {
+  width: 100%;
+  height: 100%;
+  margin-left: 10px;
+  margin-top: 5px;
+  white-space: nowrap;
 }
 
-.header2{
-    width: 100%;
-    height: 60px;
-    background-color: rgb(241,196,137);
+#address {
+  width: 40%;
+  margin-left: 10%;
+}
+#DChi {
+  color: rgb(144, 83, 3);
+}
+#sign1 {
+  margin-left: 10%;
+  width: 5%;
+}
+#sign1,
+#sign2 {
+  float: left;
+}
+#sign2 {
+  width: 7%;
+}
+#sign > a {
+  float: left;
 }
 
-#logo,#search{
-    height: 100%;
-    float: left;
-}
-#logo{
-    width: 22%;
-    height: 100%;
-    cursor: pointer;
+.header2 {
+  width: 100%;
+  height: 60px;
+  background-color: rgb(241, 196, 137);
 }
 
-#imgLogo{
-    float: left;
-    width: 60px;
-    height: 60px;
-    margin-left: 40px;
+#logo,
+#search {
+  height: 100%;
+  float: left;
 }
-#imgLogo>img{
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-}
-#NameLogo{
-    width: 200px;
-    height: 100%;
-    float: left;
-    text-align: center;
-    font-size: 22px;
-    margin-left: 10px;
-    margin-top: 16px;
-    font-weight: 800;
-    color: brown;
-}
-#search{
-    width: 30%;
-    margin-left: 11%;
-}
-#search>input{
-    width: 250px;
-    height: 25px;
-    position: relative;
-    margin-left: 45px;
-    border-radius: 4px;
-    border: 0px;
-    outline: none;
-    margin-top: 16.5px;
+#logo {
+  width: 22%;
+  height: 100%;
+  cursor: pointer;
 }
 
-
+#imgLogo {
+  float: left;
+  width: 60px;
+  height: 60px;
+  margin-left: 40px;
+}
+#imgLogo > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+#NameLogo {
+  width: 200px;
+  height: 100%;
+  float: left;
+  text-align: center;
+  font-size: 22px;
+  margin-left: 10px;
+  margin-top: 16px;
+  font-weight: 800;
+  color: brown;
+}
+#search {
+  width: 30%;
+  margin-left: 11%;
+}
+#search > input {
+  width: 250px;
+  height: 25px;
+  position: relative;
+  margin-left: 45px;
+  border-radius: 4px;
+  border: 0px;
+  outline: none;
+  margin-top: 16.5px;
+}
