@@ -5,8 +5,8 @@ import Login from '../components/Login';
 
 export default function LoginPage() {
   return (
-    <Box width="100vw" height="100vh">
-      <Box width={'95%'} height="100%" position={'relative'} left={'2.5%'}>
+    <Box height="100vh">
+      <Box width={'100%'} height="100%" position={'relative'}>
         <Header1></Header1>
         <Login name="Đăng nhập"></Login>
         <End></End>

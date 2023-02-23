@@ -5,7 +5,7 @@ import '../CSS/div.css';
 
 function Div(props) {
   return (
-    <Link to={props.url} className="w-min h-min flex">
+    <Link to={props.url} className="w-[100%] h-min flex justify-center">
       <div className="pr" onClick={props.onClick}>
         <div id="imge">
           <img src={props.image} alt="" />

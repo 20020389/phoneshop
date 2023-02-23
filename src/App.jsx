@@ -27,6 +27,10 @@ function App() {
             setUser(data.data);
             setLoading(false);
           }
+        })
+        .catch((e) => {
+          setUser(null);
+          setLoading(false);
         });
     }
   }, [loading]);
