@@ -18,33 +18,42 @@ function Header1() {
   const { user, loading, setUser, setLoading } = useStore();
   const navigate = useNavigate();
 
-  const [headerOnTop, setHeaderOnTop] = useState(false);
+  const [headerOnTop, setHeaderOnTop] = useState(true);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [logouting, setLogouting] = useState(false);
 
-  useEffect(() => {
-    function handle() {
-      if (header.current) {
-        /**
-         * @type {HTMLDivElement}
-         */
-        const navbar = header.current;
+  function handleResize() {
+    if (header.current) {
+      /**
+       * @type {HTMLDivElement}
+       */
+      const navbar = header.current;
 
-        if (headerOnTop && navbar.offsetTop > 0) {
-          setHeaderOnTop(false);
-        } else if (!headerOnTop && navbar.offsetTop == 0) {
-          setHeaderOnTop(true);
-        }
+      if (headerOnTop && navbar.offsetTop > 0) {
+        setHeaderOnTop(false);
+      } else if (!headerOnTop && navbar.offsetTop == 0) {
+        setHeaderOnTop(true);
       }
     }
+  }
 
-    window.addEventListener('scroll', handle);
+  useEffect(() => {
+    handleResize();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleResize);
 
     return () => {
-      window.removeEventListener('scroll', handle);
+      window.removeEventListener('scroll', handleResize);
     };
   }, [headerOnTop]);
+
+  function logout() {
+    localStorage.removeItem('token');
+    window.location.reload();
+  }
 
   return (
     <div
@@ -116,17 +125,15 @@ function Header1() {
         ) : (
           <div className="inline-flex gap-2 items-center h-full w-min">
             {user.name}
-            <Menu
-              isOpen={menuOpen}
-              onOpen={() => setMenuOpen(true)}
-              onCLose={() => setMenuOpen(false)}
-              // closeOnSelect={false}
-            >
+            <Menu>
               <MenuButton className="hover:border-transparent focus:outline-none">
                 <Avatar size="xs" name={user.name} />
               </MenuButton>
               <MenuList>
-                <MenuItem className="rounded-none hover:border-transparent focus:outline-none">
+                <MenuItem
+                  onClick={logout}
+                  className="rounded-none hover:border-transparent focus:outline-none"
+                >
                   logout
                 </MenuItem>
               </MenuList>
