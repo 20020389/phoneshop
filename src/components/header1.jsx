@@ -1,25 +1,57 @@
-import { Avatar } from '@chakra-ui/react';
-import React from 'react';
+import {
+  Avatar,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from '@chakra-ui/react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../CSS/header1.css';
 import { useStore } from '../lib/zustand';
 
 function Header1() {
+  const header = useRef(null);
   const { user, loading, setUser, setLoading } = useStore();
+  const navigate = useNavigate();
+
+  const [headerOnTop, setHeaderOnTop] = useState(false);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [logouting, setLogouting] = useState(false);
+
+  useEffect(() => {
+    function handle() {
+      if (header.current) {
+        /**
+         * @type {HTMLDivElement}
+         */
+        const navbar = header.current;
+
+        if (headerOnTop && navbar.offsetTop > 0) {
+          setHeaderOnTop(false);
+        } else if (!headerOnTop && navbar.offsetTop == 0) {
+          setHeaderOnTop(true);
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handle);
+
+    return () => {
+      window.removeEventListener('scroll', handle);
+    };
+  }, [headerOnTop]);
 
   return (
-    <div className="sticky z-10 top-0 w-full">
-      {/* <div className="header1 flex justify-between p-[0_20px]">
-        <div id="sdt">
-          <span>
-            Hotline:<span id="so"> 0865.564.002</span>
-          </span>
-        </div>
-        <div id="address">
-          <span>
-            Địa chỉ: <span id="DChi">234 Hoàng Quốc Việt-Bắc Từ Liêm-HN</span>
-          </span>
-        </div>
-      </div> */}
+    <div
+      ref={header}
+      className={`sticky z-10 top-0 w-full 
+            ${headerOnTop ? '' : 'drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]'}`}
+    >
       <div className="header2 flex justify-between items-center p-[0_30px]">
         <div
           id="logo"
@@ -33,32 +65,40 @@ function Header1() {
               alt=""
             />
           </div>
-          <div id="NameLogo" className="!h-min !m-0">
+          <div id="NameLogo" className="!h-min !m-0 font-['Bubblegum_Sans']">
             DragonSmartphone
           </div>
         </div>
-        <div
-          id="search"
-          className="flex items-center p-[7px_15px] !h-min !m-0 bg-white rounded-[5px]"
-        >
-          <input
-            placeholder="Search..."
-            className="bg-transparent !m-0 grow"
-          ></input>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-5 h-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+        <div className="absolute left-[50%] top-[50%] z-10 translate-x-[-50%] translate-y-[-50%]">
+          <InputGroup>
+            <Input
+              background="white"
+              placeholder="Tìm kiếm..."
+              borderWidth="2px"
+              _hover={{ borderColor: '#CBD5E0' }}
+              _focus={{ boxShadow: 'none', borderColor: '#80befc' }}
+              className="!w-[300px] !h-[43px]"
             />
-          </svg>
+            <InputRightElement className="!h-full">
+              <button
+                className="w-full h-full flex items-center justify-center 
+                    cursor-pointer hover:border-transparent focus:outline-none"
+                onClick={() => navigate('/search/content')}
+              >
+                <svg
+                  viewBox="-1 -1 26 26"
+                  focusable="false"
+                  stroke="#9299a6"
+                  className="w-5 h-5"
+                >
+                  <path
+                    fill="#9299a6"
+                    d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"
+                  ></path>
+                </svg>
+              </button>
+            </InputRightElement>
+          </InputGroup>
         </div>
 
         {!user ? (
@@ -76,7 +116,21 @@ function Header1() {
         ) : (
           <div className="inline-flex gap-2 items-center h-full w-min">
             {user.name}
-            <Avatar size="xs" name={user.name} />
+            <Menu
+              isOpen={menuOpen}
+              onOpen={() => setMenuOpen(true)}
+              onCLose={() => setMenuOpen(false)}
+              // closeOnSelect={false}
+            >
+              <MenuButton className="hover:border-transparent focus:outline-none">
+                <Avatar size="xs" name={user.name} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem className="rounded-none hover:border-transparent focus:outline-none">
+                  logout
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </div>
         )}
       </div>

@@ -10,7 +10,6 @@ const Form = styled('form');
 export default function Login(props) {
   const { register, handleSubmit } = useForm();
   const { user, setUser } = useStore((state) => state);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
