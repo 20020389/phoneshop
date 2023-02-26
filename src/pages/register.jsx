@@ -2,7 +2,6 @@ import { Box } from '@chakra-ui/react';
 import { Auth } from '../components/auth/Auth';
 import End from '../components/end';
 import Header1 from '../components/header1';
-import Registerr from '../components/Registerr';
 export default function Register() {
   return (
     <Box height="100vh">

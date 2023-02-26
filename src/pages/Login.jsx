@@ -1,7 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import End from '../components/end';
 import Header1 from '../components/header1';
-import Login from '../components/Login';
 import { Auth } from '../components/auth/Auth';
 
 export default function LoginPage() {
