@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,7 +10,24 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    screens: {
+      ...defaultTheme.screens,
+      'screen-2xl': {
+        max: '1250px',
+      },
+      'screen-xl': {
+        max: '1000px',
+      },
+      'screen-lg': {
+        max: '750px',
+      },
+      'screen-md': {
+        max: '500px',
+      },
+      'screen-sm': {
+        max: '350px',
+      },
+    },
   },
   plugins: [],
 };
