@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from 'react';
 import './App.css';
 
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Product from './pages/product';
@@ -41,12 +41,21 @@ function App() {
 
   return (
     <Routes>
+      {user == null ? (
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </>
+      ) : (
+        <></>
+      )}
       <Route path="/product" element={<Product />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+
       <Route path="/clients" element={<Clients />} />
 
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Navigate to="/" />} />
+      <Route path="/register" element={<Navigate to="/" />} />
       <Route path="/*" element={<div>404 not found</div>} />
     </Routes>
   );
