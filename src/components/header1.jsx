@@ -65,7 +65,7 @@ function Header1() {
         <div
           id="logo"
           className="flex items-center"
-          onclick="window.location.href='/'"
+          onClick={() => navigate('/')}
         >
           <div>
             <img

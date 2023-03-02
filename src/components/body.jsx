@@ -17,8 +17,9 @@ function Body() {
             name: 'Iphone14 Promax',
             price: '40.000.000đ',
           })
-          .map((item) => (
+          .map((item, index) => (
             <Div
+              key={index}
               image={item.image}
               url={item.url}
               NamePr={item.name}
