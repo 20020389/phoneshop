@@ -11,6 +11,11 @@ export default defineConfig({
         target: 'http://localhost:4000',
         changeOrigin: true,
       },
+      '/cloud': {
+        target: 'http://localhost:4040',
+        changeOrigin: true,
+        rewrite: (path) => path.replace('cloud', 'upload'),
+      },
     },
   },
 });
