@@ -165,7 +165,7 @@ export function SignUp() {
             register('role').onChange(e);
             updateError('role', '');
           }}
-          className={`!h-[55px] w-full !pl-[50px] !outline-none
+          className={`!h-[55px] w-full !pl-[50px] !outline-none disable-select__arrow
           ${
             error.role
               ? '!shadow-[0px_0px_5px_rgba(0,_0,_0,_0.2)_inset,_0px_-2px_0_#ff3a3a_inset] focus:!shadow-[0px_0px_5px_rgba(0,_0,_0,_0.2)_inset,_0px_-2px_0_#ff3a3a_inset]'
