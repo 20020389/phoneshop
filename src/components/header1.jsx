@@ -9,19 +9,16 @@ import {
   MenuList,
 } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../CSS/header1.css';
 import { useStore } from '../lib/zustand';
 
 function Header1() {
   const header = useRef(null);
-  const { user, loading, setUser, setLoading } = useStore();
+  const user = useStore((store) => store.user);
   const navigate = useNavigate();
 
   const [headerOnTop, setHeaderOnTop] = useState(true);
-
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [logouting, setLogouting] = useState(false);
 
   function handleResize() {
     if (header.current) {
@@ -112,24 +109,36 @@ function Header1() {
 
         {!user ? (
           <>
-            <div className="flex gap-2 text-[18px]">
-              <div>
-                <a href="http://localhost:3000/register">Đăng kí</a>
-              </div>
-              |
-              <div>
-                <a href="http://localhost:3000/login">Đăng nhập</a>
-              </div>
+            <div className="flex items-center gap-5 text-[15px] font-[Quicksand]">
+              <Link
+                to="http://localhost:3000/register"
+                className="text-[rgba(0,_0,_0,_0.6)] font-bold hover:underline"
+              >
+                Đăng kí
+              </Link>
+              <Link
+                to="http://localhost:3000/login"
+                className="hover:text-white"
+              >
+                <div className="bg-[#5d83db] p-[5px_20px] rounded-[5px] text-[white]">
+                  Đăng nhập
+                </div>
+              </Link>
             </div>
           </>
         ) : (
-          <div className="inline-flex gap-2 items-center h-full w-min">
-            {user.name}
+          <div className="inline-flex gap-2 items-center h-full w-min capitalize">
+            <span className="font-[Quicksand] font-[700] whitespace-nowrap">
+              {user.name}
+            </span>
             <Menu>
               <MenuButton className="hover:border-transparent focus:outline-none">
                 <Avatar size="xs" name={user.name} />
               </MenuButton>
               <MenuList>
+                <MenuItem onClick={() => navigate('/profile')}>
+                  Trang cá nhân
+                </MenuItem>
                 <MenuItem
                   onClick={logout}
                   className="rounded-none hover:border-transparent focus:outline-none"
