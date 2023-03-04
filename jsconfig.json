@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "strict": true
+    "strict": false,
+    "checkJs": true,
+    "jsx": "preserve"
   }
 }

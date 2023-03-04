@@ -1,13 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/font/google_font/GoogleSans-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/font/google_font/GoogleSans-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/font/google_font/GoogleSans-Medium.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/font/google_font/GoogleSans-Bold.ttf');
+  font-weight: 700;
+}
+
 * {
   box-sizing: border-box;
-  font-family: 'Roboto', Times, serif;
+  font-family: 'Google Sans', Times, serif;
 }
 
 #root {
@@ -29,4 +54,8 @@
   /* background-color: rgb(235, 157, 54); */
   position: relative;
   left: 2.5%;
+}
+
+.avt.chakra-avatar > div[role='img'] {
+  font-size: calc(10em / 2);
 }
