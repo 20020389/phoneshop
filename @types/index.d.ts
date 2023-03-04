@@ -1,17 +1,17 @@
 interface User {
   id: number;
-  uid: String;
-  email: String;
-  password: String;
-  name: String;
-  image: String;
-  phoneNumber: String;
-  profile: String;
+  uid: string;
+  email: string;
+  password: string;
+  name: string;
+  image: string;
+  phoneNumber: string;
+  profile: string;
   role: 'STORE' | 'DEFAULT';
   verified: Boolean;
-  updateAt: String;
-  lastLogin: String;
-  registeredAt: String;
+  updateAt: string;
+  lastLogin: string;
+  registeredAt: string;
 }
 
 enum UserRole {
@@ -20,14 +20,15 @@ enum UserRole {
 }
 
 interface Store {
-  user: User | null;
+  user?: User;
   loading: boolean;
-  setUser: (user: User) => void;
+  setUser: (user?: User) => void;
   setLoading: (loading: boolean) => void;
 }
 
 type StoreCallback<T> = (store: Store) => T;
 
 interface UseStore {
+  (): Store;
   <T>(callback: StoreCallback<T>): T;
 }
