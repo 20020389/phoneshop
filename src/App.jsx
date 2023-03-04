@@ -10,27 +10,32 @@ import Login from './pages/Login';
 import Clients from './pages/Clients';
 import { useStore } from './lib/zustand';
 import axios from 'axios';
+import { Profile } from './pages/Profile';
+
 function App() {
-  const { user, loading, setUser, setLoading } = useStore();
+  const { user, loading, setUser } = useStore();
 
   useEffect(() => {
     if (loading) {
+      const token = localStorage.getItem('token');
+      if (!token || token == '' || !token.toLowerCase().includes('bearer ')) {
+        setUser(null);
+        return;
+      }
       axios
         .get('/api/user', {
           headers: {
-            Authorization: localStorage.getItem('token'),
+            Authorization: token,
           },
         })
         .then((res) => {
           if (res.data) {
             const data = res.data;
             setUser(data.data);
-            setLoading(false);
           }
         })
         .catch((e) => {
           setUser(null);
-          setLoading(false);
         });
     }
   }, [loading]);
@@ -49,6 +54,10 @@ function App() {
       ) : (
         <></>
       )}
+      <Route
+        path="/profile"
+        element={user !== null ? <Profile /> : <Navigate to="/login" />}
+      />
       <Route path="/product" element={<Product />} />
 
       <Route path="/clients" element={<Clients />} />
