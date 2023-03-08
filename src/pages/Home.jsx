@@ -14,7 +14,7 @@ export default function Home() {
             <Header2></Header2>
             <ChoosePr></ChoosePr>
             <Body></Body>
-            <Bar></Bar>
+            <Bar></Bar><br />
             <Body></Body>
             <End></End>
          </div>
