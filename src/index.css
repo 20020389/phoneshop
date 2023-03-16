@@ -63,6 +63,38 @@ button:focus-visible {
   text-overflow: '';
 }
 
+*[data-input-error] input {
+  border-color: red !important;
+}
+
+*[data-input-error] input:focus-visible {
+  box-shadow: 0 0 0 1px red;
+}
+
+input[data-input-error] {
+  border-color: red !important;
+}
+
+input[data-input-error]:focus-visible {
+  box-shadow: 0 0 0 1px red;
+}
+
+*[data-input-error] select {
+  border-color: red !important;
+}
+
+*[data-input-error] select:focus-visible {
+  box-shadow: 0 0 0 1px red;
+}
+
+select[data-input-error] {
+  border-color: red !important;
+}
+
+select[data-input-error]:focus-visible {
+  box-shadow: 0 0 0 1px red;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

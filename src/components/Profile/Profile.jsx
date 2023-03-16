@@ -13,16 +13,17 @@ import { IoIosShareAlt } from 'react-icons/io';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useState } from 'react';
 import { EditProfile } from './EditProfile';
+import { ListStore } from './ListStore';
 
 /**
  *
  * @param {{ user: User }} props
  */
-export function StoreProfile({ user }) {
+export function Profile({ user }) {
   const [isOpenEditModel, setOpenEditModel] = useState(false);
 
   return (
-    <div className="relative bg-[#f8fafb]">
+    <div className="relative bg-[#f8fafb] min-h-[100vh]">
       <div className="p-[20px]">
         <div className="flex gap-7 flex-col">
           <div className="shadow-[0px_5px_5px_rgba(0,_0,_0,_0.1)] bg-[white] flex-grow rounded-[10px] overflow-hidden">
@@ -45,7 +46,10 @@ export function StoreProfile({ user }) {
                   </h2>
                   <div className="mt-4">
                     <span className="text-gray-500 flex items-center gap-2 font-[600] font-[Quicksand]">
-                      <FaUserTag /> Quản lý của hàng
+                      <FaUserTag />{' '}
+                      {user.role === 'STORE'
+                        ? 'Quản lý của hàng'
+                        : 'Người dùng'}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -97,9 +101,7 @@ export function StoreProfile({ user }) {
               </div>
             </div>
           </div>
-          {/* <div className="shadow-[0px_5px_5px_rgba(0,_0,_0,_0.1)] min-w-[400px] bg-[white] rounded-[10px] overflow-hidden">
-            <div className="min-h-[400px] pb-2"></div>
-          </div> */}
+          {user.role === 'STORE' && <ListStore user={user} />}
         </div>
       </div>
       <EditProfile

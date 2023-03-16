@@ -114,6 +114,8 @@ export function EditProfile({ isOpen, onOpenChange }) {
       return;
     }
 
+    setLoading(true);
+
     if (image.src) {
       try {
         e.image = await uploadFile(image.file, user.image);
@@ -125,7 +127,6 @@ export function EditProfile({ isOpen, onOpenChange }) {
         });
       }
     }
-    setLoading(true);
     try {
       const res = await http.post('/api/user', e);
       const data = res.data;
@@ -159,7 +160,7 @@ export function EditProfile({ isOpen, onOpenChange }) {
           paddingBottom="18px"
           onSubmit={handleSubmit(submit)}
         >
-          <div className="flex flex-col gap-5 pb-5">
+          <div className="flex flex-col gap-3 pb-5">
             <div className="flex justify-center">
               <Avatar
                 key={image.src ?? user.image}
