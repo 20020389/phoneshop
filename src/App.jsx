@@ -11,6 +11,8 @@ import Clients from './pages/Clients';
 import { useStore } from './lib/zustand';
 import axios from 'axios';
 import { ProfilePage } from './pages/Profile';
+import { ListStore } from './components/Profile/ListStore';
+import { StorePage } from './pages/Store';
 
 function App() {
   const { user, loading, setUser } = useStore();
@@ -57,7 +59,10 @@ function App() {
       <Route
         path="/profile"
         element={user !== null ? <ProfilePage /> : <Navigate to="/login" />}
-      />
+      >
+        <Route path="store/:storeid" element={<StorePage />} />
+        <Route path="" element={<ListStore />} />
+      </Route>
       <Route path="/product" element={<Product />} />
 
       <Route path="/clients" element={<Clients />} />

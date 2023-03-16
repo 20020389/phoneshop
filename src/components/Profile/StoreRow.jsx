@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { http } from '../../lib/axios';
 import { StoreHandle } from './StoreHanle';
 
@@ -46,7 +47,9 @@ export function StoreRow({ data, index, refresh }) {
     <>
       <tr key={data.id} className="h-[50px] border-t-[1px]">
         <td className="font-[500] text-center">{index + 1}</td>
-        <td className="font-[500] text-center">{data.name}</td>
+        <td className="font-[500] text-center">
+          <Link to={`store/${data.uid}`}>{data.name}</Link>
+        </td>
         <td className="font-[500] text-center">{data.location}</td>
         <td className="font-[500] text-center">{data.group}</td>
         <td className="font-[500] text-center">{data.productCount}</td>

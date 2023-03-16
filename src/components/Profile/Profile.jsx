@@ -14,6 +14,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useState } from 'react';
 import { EditProfile } from './EditProfile';
 import { ListStore } from './ListStore';
+import { Outlet } from 'react-router-dom';
 
 /**
  *
@@ -101,7 +102,7 @@ export function Profile({ user }) {
               </div>
             </div>
           </div>
-          {user.role === 'STORE' && <ListStore user={user} />}
+          <Outlet context={{ user }} />
         </div>
       </div>
       <EditProfile

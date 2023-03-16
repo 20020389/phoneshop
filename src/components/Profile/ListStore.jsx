@@ -2,15 +2,15 @@ import { Input, InputGroup, InputLeftElement, Tooltip } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { MdRefresh } from 'react-icons/md';
+import { useOutlet, useOutletContext } from 'react-router-dom';
 import { useListStore } from '../../hooks/useListStore';
 import { MyButton } from '../button';
 import { StoreHandle } from './StoreHanle';
 import { StoreRow } from './StoreRow';
 
-/**
- * @param {{ user: User }} props
- */
-export function ListStore({ user }) {
+export function ListStore({}) {
+  /**@type {{ user?: User }} */
+  const outlet = useOutletContext();
   const { stores, isLoading, mutate } = useListStore();
   const [isOpenAddStore, setIsOpenAddStore] = useState(false);
 
