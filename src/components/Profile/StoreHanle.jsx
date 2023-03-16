@@ -15,26 +15,64 @@ import { useMyForm } from '../../hooks/useMyForm';
 import { http } from '../../lib/axios';
 import { MyButton } from '../button';
 
-export function StoreHandle({ isOpen, onClose }) {
+/**
+ * @param {{
+ *    isOpen: boolean;
+ *    onClose: () => void;
+ *    type?: "create" | "update"
+ *    data?: StoreData
+ *    onSubmitted: () => void;
+ * }} param0
+ */
+export function StoreHandle({ isOpen, onClose, type, data, onSubmitted }) {
   const key = useKey(isOpen);
 
-  return <StoreHandleState key={key} isOpen={isOpen} onClose={onClose} />;
+  return (
+    <StoreHandleState
+      key={key}
+      isOpen={isOpen}
+      onClose={onClose}
+      type={type}
+      data={data}
+      onSubmitted={onSubmitted}
+    />
+  );
 }
 
-function StoreHandleState({ isOpen, onClose }) {
-  const { register, handleSubmit, error, isSubmitting } = useMyForm();
+/**
+ * @param {{
+ *    isOpen: boolean;
+ *    onClose: () => void;
+ *    type?: "create" | "update"
+ *    data?: StoreData
+ *    onSubmitted: () => void;
+ * }} param0
+ */
+function StoreHandleState({
+  isOpen,
+  onClose,
+  type = 'create',
+  data,
+  onSubmitted,
+}) {
+  const { register, handleSubmit, error, isSubmitting } = useMyForm({
+    defaultValue: data,
+  });
   const toast = useToast();
 
   async function submit(e, { setSubmitting }) {
-    console.log(e);
-    http
-      .post('/api/store', e)
+    const request =
+      type == 'update'
+        ? http.put(`/api/store/id/${data.uid}`, e)
+        : http.post('/api/store', e);
+
+    request
       .then(() => {
         toast({
           description: 'Thêm cửa hàng thành công',
           status: 'success',
         });
-        onClose();
+        onSubmitted();
       })
       .catch((e) => {
         console.log(e);
@@ -88,8 +126,8 @@ function StoreHandleState({ isOpen, onClose }) {
                 {error.group}
               </Text>
             </div>
-            <MyButton isLoading={isSubmitting} type="submit">
-              submit
+            <MyButton isLoading={isSubmitting} mt="20px" type="submit">
+              {type === 'update' ? 'Cập nhật' : 'Thêm cửa hàng'}
             </MyButton>
           </form>
         </ModalBody>

@@ -13,3 +13,13 @@ interface EditProfileUseForm {
   register: import('react-hook-form').UseFormRegister<EditProfileForm>;
   handleSubmit: import('react-hook-form').UseFormHandleSubmit;
 }
+
+interface StoreData {
+  uid: string;
+  name: string;
+  location: string;
+  group: string;
+  productCount: string;
+  createAt: string;
+  updateAt: string;
+}

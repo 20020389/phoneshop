@@ -1,9 +1,15 @@
 import { useRef, useState } from 'react';
 import { util } from '../lib/util';
 
+/**
+ * @param {{
+ *    rules?: DynamicObject;
+ *    defaultValue?: DynamicObject
+ * }} param0
+ */
 export function useMyForm({ rules, defaultValue } = {}) {
   /**@type {State<DynamicObject>} */
-  const [state, setState] = useState({});
+  const [state, setState] = useState(defaultValue ?? {});
   /**@type {State<DynamicObject>} */
   const [error, setError] = useState({});
   const [isSubmitting, setSubmitting] = useState(false);

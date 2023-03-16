@@ -1,9 +1,11 @@
 import { Input, InputGroup, InputLeftElement, Tooltip } from '@chakra-ui/react';
 import { useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
 import { MdRefresh } from 'react-icons/md';
 import { useListStore } from '../../hooks/useListStore';
 import { MyButton } from '../button';
 import { StoreHandle } from './StoreHanle';
+import { StoreRow } from './StoreRow';
 
 /**
  * @param {{ user: User }} props
@@ -57,35 +59,17 @@ export function ListStore({ user }) {
                   <th className="w-[120px]">Sản phẩm</th>
                   <th>Update At</th>
                   <th>Create At</th>
+                  <th className="w-[80px]"></th>
                 </tr>
               </thead>
               <tbody>
                 {stores.map((item, index) => (
-                  <tr key={item.id} className="h-[50px] border-t-[1px]">
-                    <th className="font-[500]">{index + 1}</th>
-                    <th className="font-[500]">{item.name}</th>
-                    <th className="font-[500]">{item.location}</th>
-                    <th className="font-[500]">{item.group}</th>
-                    <th className="font-[500]">{item.productCount}</th>
-                    <th className="font-[500]">
-                      <Tooltip
-                        placement="top"
-                        maxW={150}
-                        label={new Date(item.updateAt).toUTCString()}
-                      >
-                        {new Date(item.updateAt).toLocaleDateString()}
-                      </Tooltip>
-                    </th>
-                    <th className="font-[500]">
-                      <Tooltip
-                        placement="top"
-                        maxW={150}
-                        label={new Date(item.createAt).toUTCString()}
-                      >
-                        {new Date(item.createAt).toLocaleDateString()}
-                      </Tooltip>
-                    </th>
-                  </tr>
+                  <StoreRow
+                    key={index}
+                    data={item}
+                    index={index}
+                    refresh={mutate}
+                  />
                 ))}
               </tbody>
             </table>
@@ -95,6 +79,9 @@ export function ListStore({ user }) {
       <StoreHandle
         isOpen={isOpenAddStore}
         onClose={() => {
+          setIsOpenAddStore(false);
+        }}
+        onSubmitted={() => {
           setIsOpenAddStore(false);
           mutate();
         }}
