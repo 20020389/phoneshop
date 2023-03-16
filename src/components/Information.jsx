@@ -4,13 +4,13 @@ export default function Information() {
   return (
     <Box
       width={'70%'}
-      height="600px"
+      height="700px"
       position={'relative'}
       left="15%"
       // backgroundColor={'rgb(231, 228, 225)'}
     >
       <Box width={'100%'} height='40px' border={'1px solid brown'} textAlign='center'>
-      <Text position={'relative'} top={'6px'} fontSize='25px' color={'brown'} fontWeight='1000' >Thông số kỹ thuật</Text>
+      <Text position={'relative'}  fontSize='25px' color={'brown'} fontWeight='1000' >Thông số kỹ thuật</Text>
       </Box>
       <Table
         border={'1px solid brown'}
