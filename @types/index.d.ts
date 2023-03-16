@@ -28,6 +28,12 @@ interface Store {
 
 type StoreCallback<T> = (store: Store) => T;
 
+type DynamicObject = {
+  [key: string]: any;
+};
+
+type State<T> = [T, (e: T) => void];
+
 interface UseStore {
   (): Store;
   <T>(callback: StoreCallback<T>): T;

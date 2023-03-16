@@ -111,15 +111,12 @@ function Header1() {
           <>
             <div className="flex items-center gap-5 text-[15px] font-[Quicksand]">
               <Link
-                to="http://localhost:3000/register"
+                to="/register"
                 className="text-[rgba(0,_0,_0,_0.6)] font-bold hover:underline"
               >
                 Đăng kí
               </Link>
-              <Link
-                to="http://localhost:3000/login"
-                className="hover:text-white"
-              >
+              <Link to="/login" className="hover:text-white">
                 <div className="bg-[#5d83db] p-[5px_20px] rounded-[5px] text-[white]">
                   Đăng nhập
                 </div>
