@@ -1,22 +1,37 @@
 import axios from 'axios';
 
+function getBasename(url) {
+  if (typeof url !== 'string') {
+    return null;
+  }
+  const list = url.split('?')[0];
+  return list.split('/').at(-1);
+}
+
 export async function uploadFile(file, oldurl) {
-  if (oldurl && oldurl != '') {
-    try {
-      await axios.delete(oldurl);
-    } catch (error) {
-      console.log(error);
+  const formData = new FormData();
+  formData.set('file', file);
+
+  let res;
+
+  if (oldurl) {
+    const uuid = getBasename(oldurl);
+    console.log(uuid);
+    const test =
+      /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+
+    if (test.test(uuid)) {
+      try {
+        res = await axios.put(`/api/upload/${uuid}`, formData);
+      } catch {
+        res = await axios.post('/api/upload', formData);
+      } finally {
+        return res.data?.data ?? '';
+      }
     }
   }
 
-  const date = new Date();
-  const url = `/cloud/${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
-  const uploadFile = new File([file], `${Date.now()}_${file.name}`);
+  res = await axios.post('/api/upload', formData);
 
-  const formData = new FormData();
-  formData.set('file', uploadFile);
-
-  await axios.post(url, formData);
-
-  return url + '/' + uploadFile.name;
+  return res.data?.data ?? '';
 }
