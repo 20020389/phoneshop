@@ -26,13 +26,24 @@ interface Store {
   setLoading: (loading: boolean) => void;
 }
 
+interface UploadImageProps {
+  onChange?: (e: string[]) => void;
+  defaultValue?: string[];
+}
+
+type UploadHandle = {
+  submit: () => string;
+};
+
+type UploadRef = React.MutableRefObject<UploadHandle?>;
+
 type StoreCallback<T> = (store: Store) => T;
 
 type DynamicObject = {
   [key: string]: any;
 };
 
-type State<T> = [T, (e: T) => void];
+type State<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 interface UseStore {
   (): Store;

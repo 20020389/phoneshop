@@ -9,13 +9,11 @@ import './index.css';
 import { fetcher } from './lib/swrFetcher';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <SWRConfig value={{ fetcher, dedupingInterval: 100 }}>
-      <ChakraProvider>
-        <Router>
-          <App />
-        </Router>
-      </ChakraProvider>
-    </SWRConfig>
-  </React.StrictMode>
+  <SWRConfig value={{ fetcher, dedupingInterval: 100 }}>
+    <ChakraProvider>
+      <Router>
+        <App />
+      </Router>
+    </ChakraProvider>
+  </SWRConfig>
 );

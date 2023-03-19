@@ -23,3 +23,15 @@ interface StoreData {
   createAt: string;
   updateAt: string;
 }
+
+interface ImageData {
+  file?: File;
+  src?: string;
+}
+
+interface UseUpload {
+  ref: React.MutableRefObject<any>;
+  image: Partial<ImageData>[];
+  picker: (e: any) => void;
+  onChange: (callback: (image: ImageData[]) => void) => () => void;
+}
