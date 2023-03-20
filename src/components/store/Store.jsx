@@ -14,6 +14,8 @@ export function Store() {
   const { data } = useStoreData(query.storeid);
   const [isOpenAddProduct, setOpenAddProduct] = useState(false);
 
+  console.log(query);
+
   if (!data) {
     return <></>;
   }
@@ -35,6 +37,7 @@ export function Store() {
       </div>
       <div></div>
       <ProductHandle
+        storeId={query.storeid}
         isOpen={isOpenAddProduct}
         onClose={() => setOpenAddProduct(false)}
       />

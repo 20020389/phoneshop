@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
+import lodash from 'lodash';
 import {
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -19,7 +19,9 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
     submit: async () => {
       const list = [];
       for (let item of offersRef.current) {
-        list.push(await item.submit());
+        const data = { ...(await item.submit()) };
+        delete data.key;
+        list.push(data);
       }
       return list;
     },
@@ -30,7 +32,7 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
       return (
         <Offer
           ref={(el) => (offersRef.current[index] = el)}
-          key={index}
+          key={item.key}
           index={index}
           defaultValue={item}
           onChange={(e, i) => {
@@ -40,21 +42,42 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
               return newList;
             });
           }}
+          onCopy={() => {
+            addOffer(index);
+          }}
+          onDelete={() => {
+            updateOffers((prev) => {
+              return prev.filter((_, i) => index !== i);
+            });
+          }}
         />
       );
     });
   }, [offers]);
 
-  function addOffer() {
-    updateOffers((prev) => [
-      ...prev,
-      {
-        color: '#ffffff',
-        count: 0,
-        price: 0,
-        storage: '',
-      },
-    ]);
+  function addOffer(index) {
+    if (index !== undefined && offers[index]) {
+      updateOffers((prev) =>
+        insert(prev, index, {
+          key: lodash.random(1, 1000),
+          color: offers[index].color,
+          count: offers[index].count,
+          price: offers[index].price,
+          storage: offers[index].storage,
+        })
+      );
+    } else {
+      updateOffers((prev) => [
+        ...prev,
+        {
+          key: lodash.random(1, 1000),
+          color: '#ffffff',
+          count: 0,
+          price: 0,
+          storage: '',
+        },
+      ]);
+    }
   }
 
   /**@type {State<PhoneOfferType[]>['1']} */
@@ -78,11 +101,12 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
         </div>
         <div className="mt-2">
           <div className="flex items-center offer__table-header">
-            <div className="w-[10%] text-center">#</div>
-            <div className="w-[22.5%] text-center">Giá</div>
-            <div className="w-[22.5%] text-center">Số lượng</div>
-            <div className="w-[22.5%] text-center">Màu sắc</div>
-            <div className="w-[22.5%] text-center">Bộ nhớ</div>
+            <div className="w-[5%] text-center">#</div>
+            <div className="w-[22%] text-center">Giá</div>
+            <div className="w-[22%] text-center">Số lượng</div>
+            <div className="w-[22%] text-center">Màu sắc</div>
+            <div className="w-[22%] text-center">Bộ nhớ</div>
+            <div className="w-[7%] text-center"></div>
           </div>
           {renderOffers}
         </div>
@@ -90,6 +114,14 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
     </div>
   );
 }
+
+const insert = (arr, index, newItem) => [
+  ...arr.slice(0, index),
+
+  newItem,
+
+  ...arr.slice(index),
+];
 
 const PhoneOffers = forwardRef(PhoneOffersBase);
 

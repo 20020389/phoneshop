@@ -21,13 +21,15 @@ import { GithubPicker, TwitterPicker } from 'react-color';
 import { BiPlus } from 'react-icons/bi';
 import { Offer } from './Offer';
 import { PhoneOffers } from './PhoneOffers';
+import { http } from '../../lib/axios';
 
 /**@param {ProductHandleProps} p */
-export function ProductHandle({ isOpen, onClose, type = 'create' }) {
+export function ProductHandle({ storeId, isOpen, onClose, type = 'create' }) {
   const key = useKey();
 
   return (
     <ProductHandleState
+      storeId={storeId}
       key={key}
       isOpen={isOpen}
       onClose={onClose}
@@ -36,17 +38,20 @@ export function ProductHandle({ isOpen, onClose, type = 'create' }) {
   );
 }
 /**@param {ProductHandleProps} p */
-function ProductHandleState({ isOpen, onClose, type = 'create' }) {
+function ProductHandleState({ isOpen, onClose, type = 'create', storeId }) {
   /**@type {UploadRef} */
   const uploadRef = useRef(null);
   const offersRef = useRef(null);
   const { register, handleSubmit, error } = useMyForm();
 
   async function submit(e) {
-    // const images = await uploadRef.current?.submit();
-    // console.log(images);
+    const images = await uploadRef.current?.submit();
     const offers = await offersRef.current?.submit();
-    console.log(offers, offersRef);
+    e.images = JSON.stringify(images);
+    e.phoneoffers = offers;
+    http.post(`/api/store/id/${storeId}/phones`, e).then((res) => {
+      console.log(res);
+    });
   }
 
   return (

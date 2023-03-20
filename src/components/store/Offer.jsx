@@ -10,13 +10,15 @@ import {
 } from '@chakra-ui/react';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { TwitterPicker } from 'react-color';
+import { FaCopy, FaTrashAlt } from 'react-icons/fa';
+import { IoCloseSharp, IoCopy } from 'react-icons/io5';
 import { useMyForm } from '../../hooks/useMyForm';
 
 /**
  * @param {OfferProps} param0
  * @returns
  */
-function OfferBase({ defaultValue, onChange, index }, ref) {
+function OfferBase({ defaultValue, onChange, index, onCopy, onDelete }, ref) {
   const { register, handleSubmit, values, setValue } = useMyForm({
     defaultValue,
   });
@@ -46,8 +48,8 @@ function OfferBase({ defaultValue, onChange, index }, ref) {
 
   return (
     <div className={`flex items-center offer__table-row relative`}>
-      <div className="w-[10%] text-center">{index + 1}</div>
-      <div className="w-[22.5%] text-center p-2">
+      <div className="w-[5%] text-center">{index + 1}</div>
+      <div className="w-[22%] text-center p-2">
         <Input
           {...register('price', { required: true })}
           type="number"
@@ -56,7 +58,7 @@ function OfferBase({ defaultValue, onChange, index }, ref) {
           placeholder="Giá"
         ></Input>
       </div>
-      <div className="w-[22.5%] text-center p-2">
+      <div className="w-[22%] text-center p-2">
         <Input
           {...register('count', { required: true })}
           type="number"
@@ -65,12 +67,13 @@ function OfferBase({ defaultValue, onChange, index }, ref) {
           placeholder="Số lượng"
         ></Input>
       </div>
-      <div className="w-[22.5%] text-center p-2">
+      <div className="w-[22%] text-center p-2">
         <InputGroup>
           <Input
             value={values['color']}
             {...register('color', {
               required: true,
+              defaultValue,
             })}
             borderRadius={0}
             className="!border-[transparent] focus-visible:!shadow-none"
@@ -114,17 +117,58 @@ function OfferBase({ defaultValue, onChange, index }, ref) {
           </InputLeftElement>
         </InputGroup>
       </div>
-      <div className="w-[22.5%] text-center p-2">
-        <Input
-          {...register('storage', { required: true })}
-          borderRadius={0}
-          className="!border-[transparent] focus-visible:!shadow-none"
-          placeholder="Bộ nhớ"
-        ></Input>
+      <div className="w-[22%] text-center p-2">
+        <InputGroup>
+          <Input
+            value={values['storage']}
+            {...register('storage', { required: true })}
+            list={`${defaultValue.key}_storage`}
+            borderRadius={0}
+            className="!border-[transparent] focus-visible:!shadow-none"
+            placeholder="Bộ nhớ"
+          ></Input>
+          <InputRightElement>
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => setValue('storage', '')}
+            >
+              <IoCloseSharp />
+            </button>
+          </InputRightElement>
+        </InputGroup>
+        <datalist id={`${defaultValue.key}_storage`}>
+          {defaultStorages.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </datalist>
+      </div>
+      <div className="w-[7%] h-full flex items-center justify-center gap-5">
+        <button type="button" onClick={onCopy} className="text-[#828791]">
+          <IoCopy size="1.2em" />
+        </button>
+        <button type="button" className="text-red-400" onClick={onDelete}>
+          <FaTrashAlt size="1.1em" />
+        </button>
       </div>
     </div>
   );
 }
+
+const defaultStorages = [
+  '3-32GB',
+  '4-64GB',
+  '4-128GB',
+  '4-512GB',
+  '6-64GB',
+  '6-128GB',
+  '6-512GB',
+  '6-1TB',
+  '8-512GB',
+  '8-1TB',
+];
 
 const Offer = forwardRef(OfferBase);
 
