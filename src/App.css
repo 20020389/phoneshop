@@ -59,3 +59,36 @@
 .avt.chakra-avatar > div[role='img'] {
   font-size: calc(10em / 2);
 }
+
+.offer__table-header {
+  padding: 10px 0;
+}
+
+.offer__table-row {
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.offer__table-header > div:not(:first-child),
+.offer__table-row > div:not(:first-child) {
+  position: relative;
+}
+
+.offer__table-row > div:not(:first-child):before,
+.offer__table-header > div:not(:first-child):before {
+  content: '|';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.offer__color-picker input {
+  height: 30px !important;
+}
+.offer__color-picker div[title='#FFFFFF'] {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.chakra-popover__popper {
+  z-index: 10000 !important;
+}

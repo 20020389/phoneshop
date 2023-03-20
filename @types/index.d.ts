@@ -31,8 +31,23 @@ interface UploadImageProps {
   defaultValue?: string[];
 }
 
+interface RegisterField {
+  (
+    key: string,
+    options?: {
+      required?: boolean;
+      name?: string;
+      defaultValue?: any;
+    }
+  ): {
+    defaultValue: any;
+    onChange: (e: any) => void;
+    'data-input-error'?: boolean;
+  };
+}
+
 type UploadHandle = {
-  submit: () => string;
+  submit: () => Promise<string>;
 };
 
 type UploadRef = React.MutableRefObject<UploadHandle?>;

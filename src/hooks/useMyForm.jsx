@@ -12,14 +12,18 @@ export function useMyForm({ rules, defaultValue } = {}) {
   const [state, setState] = useState(defaultValue ?? {});
   /**@type {State<DynamicObject>} */
   const [error, setError] = useState({});
+  /**@type {React.MutableRefObject<DynamicObject>} */
+  const stateOptions = useRef({});
   const [isSubmitting, setSubmitting] = useState(false);
   const requireProperty = useRef(new Set());
 
-  function register(key, options) {
+  /**@type {RegisterField} */
+  function register(key, options = {}) {
+    stateOptions.current[key] = options;
     const attributes = {
-      defaultValue: state[key],
+      defaultValue: options?.defaultValue ?? state[key],
       onChange: (e) => {
-        if (e.target.value !== undefined) {
+        if (e?.target?.value !== undefined) {
           /**@ts-ignore */
           updateState(key, e.target.value);
         } else {
@@ -52,13 +56,20 @@ export function useMyForm({ rules, defaultValue } = {}) {
     setError((prev) => ({ ...prev, [key]: value }));
   }
 
-  function handleSubmit(callback) {
+  function handleSubmit(callback, throwError) {
+    /**
+     * @param {import('react').FormEvent} e
+     */
     return async (e) => {
       let hasError = false;
-      e.preventDefault();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       requireProperty.current.forEach((key) => {
+        const options = stateOptions.current[key] ?? {};
         if (state[key] === undefined || state[key] === '') {
-          updateError(key, `Trường ${key} không thể bỏ trống`);
+          updateError(key, `Trường ${options.name ?? key} không thể bỏ trống`);
           hasError = true;
         }
       });
@@ -69,9 +80,19 @@ export function useMyForm({ rules, defaultValue } = {}) {
         if (data?.then) {
           await data;
         }
+      } else if (throwError) {
+        throw new Error('Form error');
       }
     };
   }
 
-  return { register, handleSubmit, error, isSubmitting, setSubmitting };
+  return {
+    register,
+    handleSubmit,
+    error,
+    isSubmitting,
+    setSubmitting,
+    setValue: updateState,
+    values: state,
+  };
 }

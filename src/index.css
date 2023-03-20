@@ -72,7 +72,7 @@ button:focus-visible {
 }
 
 input[data-input-error] {
-  border-color: red !important;
+  border: red solid 1px !important;
 }
 
 input[data-input-error]:focus-visible {
@@ -81,6 +81,7 @@ input[data-input-error]:focus-visible {
 
 *[data-input-error] select {
   border-color: red !important;
+  border-width: 1px;
 }
 
 *[data-input-error] select:focus-visible {
@@ -89,6 +90,7 @@ input[data-input-error]:focus-visible {
 
 select[data-input-error] {
   border-color: red !important;
+  border-width: 1px;
 }
 
 select[data-input-error]:focus-visible {
