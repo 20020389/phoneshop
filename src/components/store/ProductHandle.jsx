@@ -44,14 +44,23 @@ function ProductHandleState({ isOpen, onClose, type = 'create', storeId }) {
   const offersRef = useRef(null);
   const { register, handleSubmit, error } = useMyForm();
 
+  const [uploading, setUploading] = useState(false);
+
   async function submit(e) {
+    setUploading(true);
     const images = await uploadRef.current?.submit();
     const offers = await offersRef.current?.submit();
     e.images = JSON.stringify(images);
     e.phoneoffers = offers;
-    http.post(`/api/store/id/${storeId}/phones`, e).then((res) => {
-      console.log(res);
-    });
+    http
+      .post(`/api/store/id/${storeId}/phones`, e)
+      .then((res) => {
+        console.log(res);
+        onClose();
+      })
+      .catch((err) => {
+        setUploading(false);
+      });
   }
 
   return (
@@ -67,23 +76,28 @@ function ProductHandleState({ isOpen, onClose, type = 'create', storeId }) {
         <ModalHeader>
           {type === 'create' ? 'Thêm sản phẩm' : 'Chỉnh sửa sản phẩm'}
         </ModalHeader>
-        <ModalBody>
-          <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-2">
-            <div className="flex flex-col gap-1">
-              <h2 className="font-bold">Ảnh:</h2>
-              <UploadImage ref={uploadRef} />
+        <ModalBody display="flex">
+          <form
+            onSubmit={handleSubmit(submit)}
+            className="flex flex-col justify-between flex-grow-[1]"
+          >
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
+                <h2 className="font-bold">Ảnh:</h2>
+                <UploadImage ref={uploadRef} />
+              </div>
+              <div className="flex gap-2 flex-col">
+                <h2 className="font-bold">Tên:</h2>
+                <Input
+                  {...register('name', { required: true, name: 'tên' })}
+                  placeholder="Eg: Iphone 14 Pro Max"
+                />
+                <p className="text-[0.8em] text-red-400">{error.name}</p>
+              </div>
+              <PhoneOffers ref={offersRef} {...register('offers')} />
             </div>
-            <div className="flex gap-2 flex-col">
-              <h2 className="font-bold">Tên:</h2>
-              <Input
-                {...register('name', { required: true, name: 'tên' })}
-                placeholder="Eg: Iphone 14 Pro Max"
-              />
-              <p className="text-[0.8em] text-red-400">{error.name}</p>
-            </div>
-            <PhoneOffers ref={offersRef} {...register('offers')} />
             <div className="mt-3 w-full flex justify-end">
-              <Button type="submit" colorScheme="blue">
+              <Button isLoading={uploading} type="submit" colorScheme="blue">
                 submit
               </Button>
             </div>
