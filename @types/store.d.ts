@@ -20,3 +20,20 @@ interface OfferProps {
   onCopy?: () => void;
   onDelete?: () => void;
 }
+
+interface Phone<T = string[]> {
+  uid: string;
+  name: string;
+  images: T;
+  storeId: string;
+  updateAt: string;
+  createAt: string;
+  phoneoffers: PhoneOffer[];
+}
+
+interface PhoneOffer {
+  price: number;
+  count: number;
+  color: string;
+  storage: string;
+}

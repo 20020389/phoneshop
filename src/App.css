@@ -96,3 +96,25 @@
 input::-webkit-calendar-picker-indicator {
   display: none !important;
 }
+
+.phone-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 20%);
+}
+
+@media screen and (max-width: 1200px) {
+  .phone-grid {
+    grid-template-columns: repeat(4, calc(100% / 4));
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .phone-grid {
+    grid-template-columns: repeat(3, calc(100% / 3));
+  }
+}
+
+.empty-icons svg,
+.filled-icons svg {
+  display: inline-block;
+}

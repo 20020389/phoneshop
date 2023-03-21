@@ -64,3 +64,13 @@ interface UseStore {
   (): Store;
   <T>(callback: StoreCallback<T>): T;
 }
+
+type ImageProps = {
+  src: string;
+  className?: string;
+  onClick?: (e: React.MouseEvent) => void;
+  style?: React.CSSProperties;
+  width?: number;
+  height?: number;
+  children?: React.ReactElement | React.ReactElement[];
+};
