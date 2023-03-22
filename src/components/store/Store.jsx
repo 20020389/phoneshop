@@ -44,7 +44,9 @@ export function Store() {
           </MyButton>
         </div>
       </div>
-      <div className="phone-grid">{renderPhones}</div>
+      <div className="flex flex-col min-h-[600px]">
+        <div className="phone-grid">{renderPhones}</div>
+      </div>
       <ProductHandle
         storeId={query.storeid}
         isOpen={isOpenAddProduct}

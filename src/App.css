@@ -97,6 +97,11 @@ input::-webkit-calendar-picker-indicator {
   display: none !important;
 }
 
+.empty-icons svg,
+.filled-icons svg {
+  display: inline-block;
+}
+
 .phone-grid {
   display: grid;
   grid-template-columns: repeat(5, 20%);
@@ -114,7 +119,8 @@ input::-webkit-calendar-picker-indicator {
   }
 }
 
-.empty-icons svg,
-.filled-icons svg {
-  display: inline-block;
+@media screen and (max-width: 700px) {
+  .phone-grid {
+    grid-template-columns: repeat(2, calc(100% / 2));
+  }
 }

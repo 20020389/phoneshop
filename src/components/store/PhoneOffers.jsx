@@ -37,9 +37,15 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
           defaultValue={item}
           onChange={(e, i) => {
             updateOffers((prev) => {
-              const newList = [...prev];
-              newList[i] = e;
-              return newList;
+              if (Array.isArray(prev)) {
+                const newList = [...prev];
+                newList[i] = e;
+                return newList;
+              } else {
+                const newList = [];
+                newList[i] = e;
+                return newList;
+              }
             });
           }}
           onCopy={() => {

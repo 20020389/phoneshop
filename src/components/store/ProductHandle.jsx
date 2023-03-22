@@ -25,7 +25,7 @@ import { http } from '../../lib/axios';
 
 /**@param {ProductHandleProps} p */
 export function ProductHandle({ storeId, isOpen, onClose, type = 'create' }) {
-  const key = useKey();
+  const key = useKey(isOpen);
 
   return (
     <ProductHandleState

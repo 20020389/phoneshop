@@ -91,15 +91,17 @@ function Upload({ onChange, defaultValue }, ref) {
           </div>
         </div>
       ))}
-      <button
-        className="w-24 h-24 text-[0.9em] flex flex-col items-center justify-center gap-1 border-[2px] border-dashed rounded-[2px]"
-        type="button"
-        onClick={picker}
-        disabled={uploading}
-      >
-        <IoMdAdd />
-        Thêm ảnh
-      </button>
+      {list.length < 6 && (
+        <button
+          className="w-24 h-24 text-[0.9em] flex flex-col items-center justify-center gap-1 border-[2px] border-dashed rounded-[2px]"
+          type="button"
+          onClick={picker}
+          disabled={uploading}
+        >
+          <IoMdAdd />
+          Thêm ảnh
+        </button>
+      )}
     </div>
   );
 }
