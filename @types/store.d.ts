@@ -28,6 +28,7 @@ interface Phone<T = string[]> {
   storeId: string;
   updateAt: string;
   createAt: string;
+  rating?: number;
   phoneoffers: PhoneOffer[];
 }
 
