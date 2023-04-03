@@ -14,7 +14,7 @@ export function Store() {
   const uploadRef = useRef(null);
   const query = useParams();
   const { data } = useStoreData(query.storeid);
-  const { phones } = useListPhone(query.storeid);
+  const { phones, mutate: refetchPhones } = useListPhone(query.storeid);
   const [isOpenAddProduct, setOpenAddProduct] = useState(false);
 
   const renderPhones = useMemo(() => {
@@ -22,7 +22,9 @@ export function Store() {
       return <></>;
     }
 
-    return phones.map((phone) => <Phone key={phone.uid} data={phone} />);
+    return phones.map((phone) => (
+      <Phone key={phone.uid} data={phone} refetch={refetchPhones} />
+    ));
   }, [phones]);
 
   if (!data) {
@@ -51,6 +53,7 @@ export function Store() {
         storeId={query.storeid}
         isOpen={isOpenAddProduct}
         onClose={() => setOpenAddProduct(false)}
+        refetch={refetchPhones}
       />
     </div>
   );

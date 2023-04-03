@@ -1,18 +1,36 @@
 import lodash, { isArray, isNull, isUndefined } from 'lodash';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import ImageLoader from '../ImageLoader';
 import { Rating } from 'react-simple-star-rating';
-import { Tooltip } from '@chakra-ui/react';
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { util } from '../../lib/util';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { http } from '../../lib/axios';
 
 /**
  *
  * @param {{
- *    data: Phone | undefined
+ *    data: Phone | undefined;
+ *    refetch?: () => void;
  * }} props
  */
-export function Phone({ data }) {
+export function Phone({ data, refetch }) {
+  const [isOpenDeletePhone, setOpenDelete] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
+
   const image = useMemo(() => {
     if (isArray(data.images)) {
       return data.images[0];
@@ -50,6 +68,21 @@ export function Phone({ data }) {
     return r;
   }, [data.rating]);
 
+  function deletePhone() {
+    setDeleting(true);
+    http
+      .delete(`/api/phone/id/${data.uid}`)
+      .then(() => {
+        setDeleting(false);
+        setOpenDelete(false);
+        refetch && refetch();
+      })
+      .catch((e) => {
+        console.log(e);
+        setDeleting(false);
+      });
+  }
+
   return (
     <div className="p-[10px]">
       <div className="w-full h-full overflow-hidden">
@@ -60,9 +93,16 @@ export function Phone({ data }) {
           <div className="flex relative justify-between items-start gap-2">
             <h2 className="font-bold">{data.name}</h2>
             <div className="w-[30px] flex items-center">
-              <button className="p-[2px] duration-300">
-                <BsThreeDotsVertical />
-              </button>
+              <Menu>
+                <MenuButton className="p-[2px] duration-300">
+                  <BsThreeDotsVertical />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => setOpenDelete(true)}>
+                    Xóa sản phẩm
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -82,6 +122,26 @@ export function Phone({ data }) {
           <div className="text-[0.9em] font-[600]">Số lượng: {offer.count}</div>
         </div>
       </div>
+      <Modal isOpen={isOpenDeletePhone} onClose={() => setOpenDelete(false)}>
+        <ModalOverlay />
+        <ModalCloseButton />
+        <ModalContent>
+          <ModalHeader>Xóa sản phẩn</ModalHeader>
+          <ModalBody>
+            Bạn có chắc chắn muốn xóa sản phẩm {data.name} không ?
+          </ModalBody>
+          <ModalFooter gap="10px">
+            <Button onClick={() => setOpenDelete(false)}>Không</Button>
+            <Button
+              colorScheme="red"
+              isLoading={isDeleting}
+              onClick={() => deletePhone()}
+            >
+              Có
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

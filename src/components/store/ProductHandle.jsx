@@ -24,7 +24,13 @@ import { PhoneOffers } from './PhoneOffers';
 import { http } from '../../lib/axios';
 
 /**@param {ProductHandleProps} p */
-export function ProductHandle({ storeId, isOpen, onClose, type = 'create' }) {
+export function ProductHandle({
+  storeId,
+  isOpen,
+  onClose,
+  type = 'create',
+  refetch,
+}) {
   const key = useKey(isOpen);
 
   return (
@@ -34,11 +40,18 @@ export function ProductHandle({ storeId, isOpen, onClose, type = 'create' }) {
       isOpen={isOpen}
       onClose={onClose}
       type={type}
+      refetch={refetch}
     />
   );
 }
 /**@param {ProductHandleProps} p */
-function ProductHandleState({ isOpen, onClose, type = 'create', storeId }) {
+function ProductHandleState({
+  isOpen,
+  onClose,
+  type = 'create',
+  storeId,
+  refetch,
+}) {
   /**@type {UploadRef} */
   const uploadRef = useRef(null);
   const offersRef = useRef(null);
@@ -57,6 +70,7 @@ function ProductHandleState({ isOpen, onClose, type = 'create', storeId }) {
       .then((res) => {
         console.log(res);
         onClose();
+        refetch && refetch();
       })
       .catch((err) => {
         setUploading(false);
