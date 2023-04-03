@@ -1,32 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Div from './div';
 import '../CSS/body.css';
 import { useNavigate } from 'react-router-dom';
+import { useNewestPhone } from '../hooks/useNewestPhone';
+import { Phone } from './store/Phone';
 
 function Body() {
-  // const navigation = useNavigate();
+  const { phones, mutate: refetchPhones } = useNewestPhone();
+  const renderPhones = useMemo(() => {
+    if (!phones || phones.length === 0) {
+      return <></>;
+    }
+
+    return phones.map((phone) => (
+      <Phone key={phone.uid} data={phone} refetch={refetchPhones} />
+    ));
+  }, [phones]);
 
   return (
-    <div className="body">
-      <div className="product">
-        {new Array(25)
-          .fill({
-            image: '/image/ip14.webp',
-            url: '/product',
-            name: 'Iphone14 Promax',
-            price: '40.000.000đ',
-          })
-          .map((item, index) => (
-            <Div
-              key={index}
-              image={item.image}
-              url={item.url}
-              NamePr={item.name}
-              PricePr={item.price}
-            ></Div>
-          ))}
-      </div>
+    <div className="flex flex-col min-h-[600px]">
+      <div className="phone-grid">{renderPhones}</div>
     </div>
   );
 }
