@@ -4,7 +4,7 @@ import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Product from './pages/product';
+import Product from './pages/Product';
 import Register from './pages/register';
 import Login from './pages/Login';
 import Clients from './pages/Clients';
