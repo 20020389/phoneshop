@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/react';
+import { memo } from 'react';
 
 function End() {
   return (
@@ -230,4 +231,4 @@ function End() {
     </Box>
   );
 }
-export default End;
+export default memo(End);
