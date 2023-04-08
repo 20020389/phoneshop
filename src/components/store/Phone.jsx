@@ -15,10 +15,12 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useToast,
 } from '@chakra-ui/react';
 import { util } from '../../lib/util';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { http } from '../../lib/axios';
+import { useStore } from '../../lib/zustand';
 
 /**
  *
@@ -142,6 +144,126 @@ export function Phone({ data, refetch }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
+    </div>
+  );
+}
+
+/**
+ *
+ * @param {{
+ *    data: Phone | undefined;
+ *    refetch?: () => void;
+ * }} props
+ */
+export function PhoneProduct({ data, refetch }) {
+  const toast = useToast();
+  const user = useStore((store) => store.user);
+
+  const image = useMemo(() => {
+    if (isArray(data.images)) {
+      return data.images[0];
+    }
+
+    return data.images;
+  }, [data.images]);
+
+  const offer = useMemo(() => {
+    if (data.phoneoffers && Array.isArray(data.phoneoffers)) {
+      return {
+        price:
+          util.formatPrice(
+            lodash.min(data.phoneoffers.map((item) => item.price)).toString(),
+            '.'
+          ) + 'VNĐ',
+        count: data.phoneoffers.reduce((prev, current) => {
+          return prev + current.count;
+        }, 0),
+      };
+    }
+
+    return {
+      count: 0,
+      price: 'Chưa có',
+    };
+  }, [data.phoneoffers]);
+
+  const rating = useMemo(() => {
+    const r = parseFloat(data.rating?.toString());
+    if (isUndefined(r) || isNull(r) || isNaN(r)) {
+      return 0;
+    }
+
+    return r;
+  }, [data.rating]);
+
+  function addPhoneToCart() {
+    if (user.role !== 'DEFAULT') {
+      toast({
+        description: 'Bạn không phải là người mua hàng',
+        status: 'error',
+        title: 'Thất bại',
+        position: 'bottom-left',
+        isClosable: true,
+      });
+    }
+
+    http
+      .post('/api/user/cart', {
+        phoneId: data.uid,
+      })
+      .then((res) => {
+        toast({
+          description: 'Thêm sản phẩm vào giỏ hàng thành công',
+          status: 'success',
+          position: 'bottom-left',
+          isClosable: true,
+        });
+        refetch && refetch();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  return (
+    <div className="p-[10px]">
+      <div className="w-full h-full">
+        <div
+          className="w-full bg-[white] h-[250px] rounded-[10px] p-[25px_25px]
+                        border-[1px] border-[rgba(0,_0,_0,_0.05)] 
+                        shadow-[2px_2px_6px_rgba(0,_0,_0,_0.1),-1px_-1px_3px_rgba(0,_0,_0,_0.05)]"
+        >
+          <ImageLoader src={image} />
+        </div>
+        <div className="p-[10px_0px] flex flex-col gap-1 ">
+          <div className="flex relative justify-between items-start gap-2">
+            <h2 className="font-bold">{data.name}</h2>
+            <div className="w-[30px] flex items-center"></div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div>
+              <Rating
+                size={15}
+                style={{ pointerEvents: 'none' }}
+                initialValue={rating}
+                allowFraction
+              />
+            </div>
+            <div className="p-[0_6px] text-[0.7em] bg-[#2d3748] text-gray-100 rounded-[2px]">
+              {rating || 'chưa có'}
+            </div>
+          </div>
+          <div className="text-[0.9em] font-[600]">Giá: {offer.price}</div>
+          <div className="text-[0.9em] font-[600]">
+            <button
+              className="p-[8px_20px] rounded-[20px] border-[2px] border-[#f1c489] mt-3 hover:bg-[#e29f48] hover:text-white hover:border-[#e29f48]"
+              onClick={addPhoneToCart}
+            >
+              Thêm vào giỏ hàng
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
