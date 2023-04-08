@@ -139,7 +139,7 @@ function Cart({}, ref) {
           </button>
         </PopoverTrigger>
         <Portal>
-          <PopoverContent className="overflow-visible !w-min !pr-[180px] !bg-transparent !border-none !shadow-none">
+          <PopoverContent className="overflow-visible !w-min !pr-[100px] !bg-transparent !border-none !shadow-none">
             <PopoverArrow />
             <div className="bg-white min-h-[200px] min-w-[600px] p-[15px_20px] rounded-[5px]">
               <div className="">
