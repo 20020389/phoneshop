@@ -15,5 +15,11 @@ export default defineConfig({
   },
   preview: {
     port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://35.240.132.40:8080',
+        changeOrigin: true,
+      },
+    },
   },
 });
