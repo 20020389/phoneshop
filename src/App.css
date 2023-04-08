@@ -132,3 +132,7 @@ input::-webkit-calendar-picker-indicator {
 .card:hover button {
   opacity: 1;
 }
+
+div[data-popper-arrow] > div.chakra-popover__arrow {
+  box-shadow: none !important;
+}
