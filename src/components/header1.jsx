@@ -8,12 +8,20 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../CSS/header1.css';
 import { useStore } from '../lib/zustand';
+import Cart from './Cart';
 
-function Header1() {
+/**
+ *
+ * @param {{
+ *  refetchCart?: () => void;
+ * }} props
+ * @returns
+ */
+function Header1({}) {
   const header = useRef(null);
   const user = useStore((store) => store.user);
   const navigate = useNavigate();
@@ -125,6 +133,7 @@ function Header1() {
           </>
         ) : (
           <div className="inline-flex gap-2 items-center h-full w-min capitalize">
+            <Cart />
             <span className="font-[Quicksand] font-[700] whitespace-nowrap">
               {user.name}
             </span>
@@ -150,4 +159,4 @@ function Header1() {
     </div>
   );
 }
-export default Header1;
+export default memo(Header1);

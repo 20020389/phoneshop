@@ -39,3 +39,12 @@ interface PhoneOffer {
   color: string;
   storage: string;
 }
+
+type Cart<T = string[]> = {
+  uid: string;
+  name: string;
+  images: T;
+  rating?: number;
+  phoneoffers: PhoneOffer[];
+  count: number;
+}[];

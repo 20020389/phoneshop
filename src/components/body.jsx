@@ -1,20 +1,32 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
+import { useSWRConfig } from 'swr';
 
-import Div from './div';
 import '../CSS/body.css';
-import { useNavigate } from 'react-router-dom';
 import { useNewestPhone } from '../hooks/useNewestPhone';
-import { Phone } from './store/Phone';
+import { PhoneProduct } from './store/Phone';
 
-function Body() {
+/**
+ *
+ * @param {{
+ *  refetchCart?: () => void;
+ * }} props
+ * @returns
+ */
+function Body({}) {
   const { phones, mutate: refetchPhones } = useNewestPhone();
+  const { mutate } = useSWRConfig();
+
+  function refetchCart() {
+    mutate('/api/user/cart');
+  }
+
   const renderPhones = useMemo(() => {
     if (!phones || phones.length === 0) {
       return <></>;
     }
 
     return phones.map((phone) => (
-      <Phone key={phone.uid} data={phone} refetch={refetchPhones} />
+      <PhoneProduct key={phone.uid} refetch={refetchCart} data={phone} />
     ));
   }, [phones]);
 
@@ -24,4 +36,4 @@ function Body() {
     </div>
   );
 }
-export default Body;
+export default memo(Body);
