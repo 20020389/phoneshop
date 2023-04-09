@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "kill": "fuser -k 3000/tcp",
     "stop": "pm2 delete client",
-    "product": "pm2 start npm --name client -- start"
+    "product": "pm2 start npm --name client -- preview"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
