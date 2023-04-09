@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "kill": "fuser -k 3000/tcp",
+    "stop": "pm2 delete client",
+    "product": "pm2 start npm --name client -- start"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
