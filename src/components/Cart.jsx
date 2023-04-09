@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
   Portal,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -21,8 +22,9 @@ import {
   useState,
 } from 'react';
 import { RiShoppingCartLine } from 'react-icons/ri';
-import { GrFormClose } from 'react-icons/gr';
+import { HiPlus, HiMinus } from 'react-icons/hi';
 import { useCartData } from '../hooks/useCart';
+import { http } from '../lib/axios';
 
 // /**
 //  *
@@ -32,7 +34,8 @@ import { useCartData } from '../hooks/useCart';
 //  * }} param0
 //  */
 function Cart({}, ref) {
-  const { cart, mutate: refetchCart } = useCartData();
+  const toast = useToast();
+  const { cart, mutate: refetchCart, isLoading } = useCartData();
   const { isOpen, onToggle, onClose, onOpen } = useDisclosure();
   const [buyItems, setBuyItems] = useState([]);
 
@@ -58,6 +61,46 @@ function Cart({}, ref) {
       console.log(listCheckbox);
       return listCheckbox;
     });
+  }
+
+  function addItem(itemId, count = 1) {
+    http
+      .post('/api/user/cart', {
+        phoneId: itemId,
+      })
+      .then((res) => {
+        toast({
+          description: 'cập nhật giỏ hàng thành công',
+          status: 'success',
+          position: 'bottom-left',
+          isClosable: true,
+        });
+        refetchCart();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function minusItem(itemId, count = 1) {
+    http
+      .delete('/api/user/cart', {
+        data: {
+          phoneId: itemId,
+        },
+      })
+      .then((res) => {
+        toast({
+          description: 'cập nhật giỏ hàng thành công',
+          status: 'success',
+          position: 'bottom-left',
+          isClosable: true,
+        });
+        refetchCart();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const renderCart = useMemo(() => {
@@ -90,9 +133,22 @@ function Cart({}, ref) {
             <div>{item.name}</div>
           </div>
           {item.count && (
-            <div className="pl-2 flex items-center">
-              <GrFormClose />
-              {item.count}
+            <div className="pl-2 flex items-center gap-2">
+              <button
+                disabled={isLoading}
+                onClick={() => minusItem(item.uid)}
+                className="w-[20px] h-[20px] rounded-sm text-[1em] flex items-center justify-center bg-[#e29f48] text-white"
+              >
+                <HiMinus />
+              </button>
+              <div className="min-w-[20px] text-center">{item.count}</div>
+              <button
+                disabled={isLoading}
+                onClick={() => addItem(item.uid)}
+                className="w-[20px] h-[20px] rounded-sm text-[1em] flex items-center justify-center bg-[#e29f48] text-white"
+              >
+                <HiPlus />
+              </button>
             </div>
           )}
         </div>
@@ -101,18 +157,19 @@ function Cart({}, ref) {
   }, [cart, buyItems]);
 
   const isCheckAll = useMemo(() => {
-    if (buyItems.length == 0) {
+    console.log(buyItems.length !== cart?.length);
+    if (buyItems.length == 0 || buyItems.length !== cart?.length) {
       return false;
     }
     return buyItems.every((item) => item);
-  }, [buyItems]);
+  }, [buyItems, cart]);
 
   const canBuy = useMemo(() => {
     if (buyItems.length == 0) {
       return false;
     }
     return !buyItems.every((item) => !item);
-  }, [buyItems]);
+  }, [buyItems, cart]);
 
   return (
     <div className="mr-1">
