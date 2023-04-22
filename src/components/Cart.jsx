@@ -157,7 +157,6 @@ function Cart({}, ref) {
   }, [cart, buyItems]);
 
   const isCheckAll = useMemo(() => {
-    console.log(buyItems.length !== cart?.length);
     if (buyItems.length == 0 || buyItems.length !== cart?.length) {
       return false;
     }

@@ -13,6 +13,7 @@ import axios from 'axios';
 import { ProfilePage } from './pages/Profile';
 import { ListStore } from './components/Profile/ListStore';
 import { StorePage } from './pages/Store';
+import PhonePage from './pages/Phone';
 
 function App() {
   const { user, loading, setUser } = useStore();
@@ -63,7 +64,7 @@ function App() {
         <Route path="store/:storeid" element={<StorePage />} />
         <Route path="" element={<ListStore />} />
       </Route>
-      <Route path="/product" element={<Product />} />
+      <Route path="/phones/:id" element={<PhonePage />} />
 
       <Route path="/clients" element={<Clients />} />
 

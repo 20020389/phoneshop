@@ -21,6 +21,7 @@ import { util } from '../../lib/util';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { http } from '../../lib/axios';
 import { useStore } from '../../lib/zustand';
+import { Link } from 'react-router-dom';
 
 /**
  *
@@ -255,12 +256,14 @@ export function PhoneProduct({ data, refetch }) {
           </div>
           <div className="text-[0.9em] font-[600]">Giá: {offer.price}</div>
           <div className="text-[0.9em] font-[600]">
-            <button
-              className="p-[8px_20px] rounded-[20px] border-[2px] border-[#f1c489] mt-3 hover:bg-[#e29f48] hover:text-white hover:border-[#e29f48]"
-              onClick={addPhoneToCart}
-            >
-              Thêm vào giỏ hàng
-            </button>
+            <Link to={`/phones/${data.uid}`}>
+              <button
+                className="p-[8px_30px] rounded-[20px] border-[2px] border-[#f1c489] mt-3 hover:bg-[#e29f48] hover:text-white hover:border-[#e29f48]"
+                // onClick={addPhoneToCart}
+              >
+                Xem chi tiết
+              </button>
+            </Link>
           </div>
         </div>
       </div>
