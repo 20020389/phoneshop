@@ -4,6 +4,7 @@
     "checkJs": true,
     "target": "ES6",
     "moduleResolution": "node",
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "lib": ["ES2021"]
   }
 }

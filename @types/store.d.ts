@@ -48,3 +48,13 @@ type Cart<T = string[]> = {
   phoneoffers: PhoneOffer[];
   count: number;
 }[];
+
+interface PhoneProfile {
+  title: string;
+  content: string;
+}
+
+interface PhoneDescription {
+  title: string;
+  content: string;
+}
