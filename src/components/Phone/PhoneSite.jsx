@@ -117,7 +117,7 @@ export function PhoneSite() {
     return phoneData.phoneoffers.map((offer, index) => (
       <div
         key={index}
-        className={`w-[30px] h-[30px]`}
+        className={`w-[30px] h-[30px] border-[1px] border-[rgba(0,_0,_0,_0.15)]`}
         style={{ backgroundColor: offer.color }}
       ></div>
     ));
