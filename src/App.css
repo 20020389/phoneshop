@@ -136,3 +136,14 @@ input::-webkit-calendar-picker-indicator {
 div[data-popper-arrow] > div.chakra-popover__arrow {
   box-shadow: none !important;
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+  background: rgb(255, 255, 255);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  width: 8px;
+  background: #cecece;
+}

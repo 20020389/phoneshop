@@ -4,6 +4,8 @@ import { usePhone } from '../../hooks/usePhone';
 import { formatPrice } from '../../lib/util';
 import { TiShoppingCart } from 'react-icons/ti';
 import { Divider } from '@chakra-ui/react';
+import { useNewestPhone } from '../../hooks/useNewestPhone';
+import { PhoneProduct } from '../store/Phone';
 
 const convertToMillions = (amount) => {
   return Math.floor(amount / 1000000) + ' triệu';
@@ -84,6 +86,8 @@ export function PhoneSite() {
   const { id } = useParams();
 
   const { phoneData } = usePhone(id);
+
+  const { phones } = useNewestPhone();
 
   console.log(phoneData);
 
@@ -195,7 +199,7 @@ export function PhoneSite() {
           {phoneData.name} {renderRangePrice}
         </h2>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-between">
         <div className="flex w-[300px] flex-col">
           <div className="w-[250px] h-[250px]">
             <img className="object-contain" src={phoneData.images[0]} alt="" />
@@ -292,6 +296,19 @@ export function PhoneSite() {
           </div>
           <table className="border-collapse">{renderProfile}</table>
         </div> */}
+        <div className="flex w-[300px] items-end  flex-col pl-5">
+          <div>
+            <h2 className="font-bold p-[10px_10px] text-[17px]">
+              Các sản phẩm mới nhất
+            </h2>
+          </div>
+          <div className="flex flex-col gap-1 w-[200px] overflow-y-auto scrollbar max-h-[400px]">
+            {phones &&
+              phones.map((phone) => (
+                <PhoneProduct key={phone.uid} data={phone} size="sm" />
+              ))}
+          </div>
+        </div>
       </div>
       <div className="flex gap-5 mt-10 mb-10">
         <div className="">

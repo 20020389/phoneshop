@@ -45,11 +45,9 @@ export function Phone({ data, refetch }) {
   const offer = useMemo(() => {
     if (data.phoneoffers && Array.isArray(data.phoneoffers)) {
       return {
-        price:
-          util.formatPrice(
-            lodash.min(data.phoneoffers.map((item) => item.price)).toString(),
-            '.'
-          ) + 'VNĐ',
+        price: util.formatPrice(
+          lodash.min(data.phoneoffers.map((item) => item.price)).toString()
+        ),
         count: data.phoneoffers.reduce((prev, current) => {
           return prev + current.count;
         }, 0),
@@ -154,9 +152,10 @@ export function Phone({ data, refetch }) {
  * @param {{
  *    data: Phone | undefined;
  *    refetch?: () => void;
+ *    size?: "sm" | "md"
  * }} props
  */
-export function PhoneProduct({ data, refetch }) {
+export function PhoneProduct({ data, refetch, size = 'md' }) {
   const toast = useToast();
   const user = useStore((store) => store.user);
 
@@ -171,11 +170,9 @@ export function PhoneProduct({ data, refetch }) {
   const offer = useMemo(() => {
     if (data.phoneoffers && Array.isArray(data.phoneoffers)) {
       return {
-        price:
-          util.formatPrice(
-            lodash.min(data.phoneoffers.map((item) => item.price)).toString(),
-            '.'
-          ) + 'VNĐ',
+        price: util.formatPrice(
+          lodash.min(data.phoneoffers.map((item) => item.price)).toString()
+        ),
         count: data.phoneoffers.reduce((prev, current) => {
           return prev + current.count;
         }, 0),
@@ -227,24 +224,26 @@ export function PhoneProduct({ data, refetch }) {
   }
 
   return (
-    <div className="p-[10px]">
+    <div className={`p-[10px] ${size == 'md' ? 'text-[16px]' : 'text-[14px]'}`}>
       <div className="w-full h-full">
         <div
-          className="w-full bg-[white] h-[250px] rounded-[10px] p-[25px_25px]
+          className={`w-full bg-[white] ${
+            size == 'md' ? 'h-[250px]' : 'h-[150px]'
+          } rounded-[10px] p-[25px_25px]
                         border-[1px] border-[rgba(0,_0,_0,_0.05)] 
-                        shadow-[2px_2px_6px_rgba(0,_0,_0,_0.1),-1px_-1px_3px_rgba(0,_0,_0,_0.05)]"
+                        shadow-[2px_2px_6px_rgba(0,_0,_0,_0.1),-1px_-1px_3px_rgba(0,_0,_0,_0.05)]`}
         >
           <ImageLoader src={image} />
         </div>
         <div className="p-[10px_0px] flex flex-col gap-1 ">
           <div className="flex relative justify-between items-start gap-2">
-            <h2 className="font-bold">{data.name}</h2>
+            <h2 className="font-bold text-[1em]">{data.name}</h2>
             <div className="w-[30px] flex items-center"></div>
           </div>
           <div className="flex items-center gap-2">
             <div>
               <Rating
-                size={15}
+                size={size === 'md' ? 15 : 13}
                 style={{ pointerEvents: 'none' }}
                 initialValue={rating}
                 allowFraction
@@ -258,7 +257,9 @@ export function PhoneProduct({ data, refetch }) {
           <div className="text-[0.9em] font-[600]">
             <Link to={`/phones/${data.uid}`}>
               <button
-                className="p-[8px_30px] rounded-[20px] border-[2px] border-[#f1c489] mt-3 hover:bg-[#e29f48] hover:text-white hover:border-[#e29f48]"
+                className={`${
+                  size === 'md' ? 'p-[8px_30px]' : 'p-[5px_20px]'
+                } rounded-[20px] border-[2px] border-[#f1c489] mt-3 hover:bg-[#e29f48] hover:text-white hover:border-[#e29f48]`}
                 // onClick={addPhoneToCart}
               >
                 Xem chi tiết
