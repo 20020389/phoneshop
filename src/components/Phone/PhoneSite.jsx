@@ -61,12 +61,12 @@ const phoneProfile = [
 const phoneDescription = [
   {
     title: '',
-    content: `Xiaomi Redmi Note 12 5G được trình làng vào ngày 27/10/2022. Ngoài sở hữu thiết kế đẹp mắt, máy còn có thông số kỹ thuật ấn tượng: Chip mạnh hỗ trợ 5G, màn hình siêu đẹp, pin trâu camera chất lượng. Trong các mẫu điện thoại Note 12 Series, Redmi Note 12 là sản phẩm chủ đạo kỳ vọng mang lại doanh thu cực đỉnh cho hãng.
+    content: `Là mẫu điện thoại được trình làng vào ngày 27/10/2022. Ngoài sở hữu thiết kế đẹp mắt, máy còn có thông số kỹ thuật ấn tượng: Chip mạnh hỗ trợ 5G, màn hình siêu đẹp, pin trâu camera chất lượng. Trong các mẫu điện thoại Note 12 Series, Redmi Note 12 là sản phẩm chủ đạo kỳ vọng mang lại doanh thu cực đỉnh cho hãng.
   Trong sự kiện ra mắt, gã khổng lồ công nghệ Trung Quốc cũng trình làng mẫu Redmi Note 12 Pro với chip Dimensity 1080 mạnh mẽ, camera 50MP OIS, màn hình OLED 1 tỷ màu và mức giá vô cùng rẻ.
   Chúng ta nhận thấy rằng, Xiaomi Note 12 được trang bị chip Snapdragon 4 Gen 1 hoàn toàn mới hỗ trợ 5G, cùng pin 5000mAh kèm sạc nhanh 33W. Sau đây là phần so sánh của Note 12 với người tiền nhiệm của nó.`,
   },
   {
-    title: 'Đánh giá Redmi Note 12',
+    title: 'Đánh giá',
     content:
       'Sau đây là bài đánh giá chi tiết về điện thoại Xiaomi thuộc dòng Note 12 để Quý khách có quyết định nâng cấp lên phiên bản mới này hay không?',
   },
@@ -82,12 +82,19 @@ const phoneDescription = [
   },
 ];
 
-export function PhoneSite() {
+/**
+ *
+ * @param {{
+ *  user?: User
+ * }} param0
+ * @returns
+ */
+export function PhoneSite({ user }) {
   const { id } = useParams();
 
   const { phoneData } = usePhone(id);
 
-  const { phones } = useNewestPhone();
+  const { phones } = useNewestPhone({ max: 2 });
 
   console.log(phoneData);
 
@@ -315,7 +322,7 @@ export function PhoneSite() {
           <div>
             <Divider />
             <h2 className="font-bold p-[10px_10px] text-[17px]">
-              Thông tin chi tiết Xiaomi Redmi Note 12 (Giá ~ 4 triệu)
+              Thông tin chi tiết {phoneData.name} {renderRangePrice}
             </h2>
             <Divider />
           </div>

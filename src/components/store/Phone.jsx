@@ -93,7 +93,7 @@ export function Phone({ data, refetch }) {
         <div className="p-[10px_0px] flex flex-col gap-1 card">
           <div className="flex relative justify-between items-start gap-2">
             <h2 className="font-bold">{data.name}</h2>
-            <div className="w-[30px] flex items-center">
+            <div className="w-[30px] flex items-center card-actions">
               <Menu>
                 <MenuButton className="p-[2px] duration-300">
                   <BsThreeDotsVertical />
@@ -121,6 +121,16 @@ export function Phone({ data, refetch }) {
           </div>
           <div className="text-[0.9em] font-[600]">Giá: {offer.price}</div>
           <div className="text-[0.9em] font-[600]">Số lượng: {offer.count}</div>
+          <div className="text-[0.9em] font-[600]">
+            <Link to={`/phones/${data.uid}`}>
+              <button
+                className={`p-[8px_30px] rounded-[20px] border-[2px] border-[#f1c489] mt-3 hover:bg-[#e29f48] hover:text-white hover:border-[#e29f48]`}
+                // onClick={addPhoneToCart}
+              >
+                Xem chi tiết
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
       <Modal isOpen={isOpenDeletePhone} onClose={() => setOpenDelete(false)}>

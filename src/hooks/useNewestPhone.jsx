@@ -3,7 +3,8 @@ import useSWR from 'swr';
 
 /**
  *
- * @param {string} storeId
+ * @param {{
+ * max?: number}} storeId
  * @returns {{
  *  phones: Phone[],
  *  isLoading: boolean;
@@ -11,8 +12,9 @@ import useSWR from 'swr';
  *  mutate: () => void;
  * }}
  */
-export function useNewestPhone() {
-  const { data, isLoading, error, mutate } = useSWR(`/api/phones/newest`);
+export function useNewestPhone({ max } = {}) {
+  const url = max ? `/api/phones/newest?limit=${max}` : '/api/phones/newest';
+  const { data, isLoading, error, mutate } = useSWR(url);
 
   console.log(data);
 

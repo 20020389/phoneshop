@@ -133,7 +133,7 @@ function Header1({}) {
           </>
         ) : (
           <div className="inline-flex gap-2 items-center h-full w-min capitalize">
-            <Cart />
+            {user.role === 'DEFAULT' && <Cart />}
             <span className="font-[Quicksand] font-[700] whitespace-nowrap text-right min-w-[100px]">
               {user.name}
             </span>

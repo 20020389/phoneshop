@@ -125,7 +125,7 @@ input::-webkit-calendar-picker-indicator {
   }
 }
 
-.card button {
+.card .card-actions button {
   opacity: 0;
 }
 
