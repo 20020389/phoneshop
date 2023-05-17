@@ -30,6 +30,7 @@ interface Phone<T = string[]> {
   updateAt: string;
   createAt: string;
   rating?: number;
+  owner?: boolean;
   phoneoffers: PhoneOffer[];
 }
 

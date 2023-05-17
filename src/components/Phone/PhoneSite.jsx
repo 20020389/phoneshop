@@ -6,6 +6,7 @@ import { TiShoppingCart } from 'react-icons/ti';
 import { Divider } from '@chakra-ui/react';
 import { useNewestPhone } from '../../hooks/useNewestPhone';
 import { PhoneProduct } from '../store/Phone';
+import { FaEdit } from 'react-icons/fa';
 
 const convertToMillions = (amount) => {
   return Math.floor(amount / 1000000) + ' triệu';
@@ -202,8 +203,8 @@ export function PhoneSite({ user }) {
   return (
     <div className="min-h-[80vh] w-[1200px] mx-auto pt-10 flex-col flex">
       <div className="mb-4">
-        <h2 className="text-[20px] font-bold">
-          {phoneData.name} {renderRangePrice}
+        <h2 className="text-[20px] font-bold flex items-center gap-2">
+          {phoneData.name} {renderRangePrice}{' '}
         </h2>
       </div>
       <div className="flex gap-4 justify-between">
@@ -280,22 +281,35 @@ export function PhoneSite({ user }) {
               (ĐN)
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#5d83db]">
-              <TiShoppingCart size={20} /> Thêm vào giỏ hàng
-            </button>
-            <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#fa9d4d]">
-              Mua ngay
-            </button>
-          </div>
-          <div>
-            <button className="flex flex-col w-[100%] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#5d83db]">
-              MUA TRẢ GÓP 0%
-              <span className="text-[0.8em]">
-                (Duyệt HS 5 phút, Trả góp qua thẻ)
-              </span>
-            </button>
-          </div>
+          {!phoneData?.owner ? (
+            <>
+              <div className="flex items-center justify-between">
+                <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#5d83db]">
+                  <TiShoppingCart size={20} /> Thêm vào giỏ hàng
+                </button>
+                <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#fa9d4d]">
+                  Mua ngay
+                </button>
+              </div>
+              <div>
+                <button className="flex flex-col w-[100%] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#5d83db]">
+                  MUA TRẢ GÓP 0%
+                  <span className="text-[0.8em]">
+                    (Duyệt HS 5 phút, Trả góp qua thẻ)
+                  </span>
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center justify-between">
+              <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#5d83db]">
+                Chỉnh sửa
+              </button>
+              <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#eb5959]">
+                Xóa sản phẩm
+              </button>
+            </div>
+          )}
         </div>
         {/* <div className="flex w-[400px] flex-col pl-5">
           <div className="p-[10px_5px] text-center font-bold border-[2px] border-b-[0] border-[rgba(0,_0,_0,_0.07)]">
@@ -321,16 +335,26 @@ export function PhoneSite({ user }) {
         <div className="">
           <div>
             <Divider />
-            <h2 className="font-bold p-[10px_10px] text-[17px]">
-              Thông tin chi tiết {phoneData.name} {renderRangePrice}
+            <h2 className="font-bold p-[10px_10px] text-[17px] flex items-center gap-2">
+              Thông tin chi tiết {phoneData.name} {renderRangePrice}{' '}
+              {phoneData?.owner && (
+                <button className="text-gray-500 mt-[-2px]">
+                  <FaEdit />
+                </button>
+              )}
             </h2>
             <Divider />
           </div>
           <div className="flex flex-col gap-2 mt-4">{renderDescription}</div>
         </div>
         <div className="flex min-w-[400px] w-[400px] flex-col pl-5">
-          <div className="p-[10px_5px] text-center font-bold border-[2px] border-b-[0] border-[rgba(0,_0,_0,_0.07)]">
-            Thông số kỹ thuật
+          <div className="p-[10px_5px] text-center flex items-center justify-center gap-2 font-bold border-[2px] border-b-[0] border-[rgba(0,_0,_0,_0.07)]">
+            Thông số kỹ thuật{' '}
+            {phoneData?.owner && (
+              <button className="text-gray-500 mt-[-2px]">
+                <FaEdit />
+              </button>
+            )}
           </div>
           <table className="border-collapse">{renderProfile}</table>
         </div>
