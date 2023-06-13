@@ -14,6 +14,7 @@ import { ProfilePage } from './pages/Profile';
 import { ListStore } from './components/Profile/ListStore';
 import { StorePage } from './pages/Store';
 import PhonePage from './pages/Phone';
+import { ListTransaction } from './components/Profile/ListTransaction';
 
 function App() {
   const { user, loading, setUser } = useStore();
@@ -61,10 +62,18 @@ function App() {
         path="/profile"
         element={user !== null ? <ProfilePage /> : <Navigate to="/login" />}
       >
-        <Route path="store/:storeid" element={<StorePage />} />
-        <Route path="" element={<ListStore />} />
+        {user?.role === 'STORE' ? (
+          <>
+            <Route path="store/:storeid" element={<StorePage />} />
+            <Route path="" element={<ListStore />} />
+          </>
+        ) : (
+          <>
+            <Route path="" element={<ListTransaction user={user} />} />
+          </>
+        )}
       </Route>
-      <Route path="/phones/:id" element={<PhonePage />} />
+      <Route path="/phones/:id" element={<PhonePage user={user} />} />
 
       <Route path="/clients" element={<Clients />} />
 

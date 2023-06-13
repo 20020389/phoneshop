@@ -16,3 +16,15 @@ export const formatPrice = (price) => {
 const util = { upperFirstChar, formatPrice };
 
 export { util };
+
+export function convertTime(timeStr) {
+  var datetime = new Date(timeStr);
+  var hours = datetime.getHours();
+  var minutes = datetime.getMinutes();
+  var date = datetime.getDate();
+  var month = datetime.getMonth() + 1;
+  var year = datetime.getFullYear();
+  var newTimeStr =
+    hours + ':' + minutes + ' ' + date + '/' + month + '/' + year;
+  return newTimeStr;
+}

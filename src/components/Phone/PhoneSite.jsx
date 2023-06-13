@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { usePhone } from '../../hooks/usePhone';
 import { formatPrice } from '../../lib/util';
@@ -7,6 +7,8 @@ import { Divider } from '@chakra-ui/react';
 import { useNewestPhone } from '../../hooks/useNewestPhone';
 import { PhoneProduct } from '../store/Phone';
 import { FaEdit } from 'react-icons/fa';
+import { RadioGroup } from './RadioGroup';
+import { BuyPhoneModal } from './BuyPhoneModal';
 
 const convertToMillions = (amount) => {
   return Math.floor(amount / 1000000) + ' triệu';
@@ -97,7 +99,14 @@ export function PhoneSite({ user }) {
 
   const { phones } = useNewestPhone({ max: 2 });
 
-  console.log(phoneData);
+  const [storageSelect, setStorageSelect] = useState('');
+  const [colorSelect, setColorSelect] = useState('');
+  const [disables, setDisables] = useState({
+    colors: [],
+    storage: [],
+  });
+
+  console.log(user);
 
   const renderRangePrice = useMemo(() => {
     if (!phoneData || !Array.isArray(phoneData?.phoneoffers)) {
@@ -117,33 +126,40 @@ export function PhoneSite({ user }) {
     return formatPrice(phoneData.phoneoffers[0].price);
   }, [phoneData?.phoneoffers]);
 
-  const renderColors = useMemo(() => {
+  const colorOptions = useMemo(() => {
     if (!phoneData || !Array.isArray(phoneData?.phoneoffers)) {
-      return <></>;
+      return [];
     }
 
-    return phoneData.phoneoffers.map((offer, index) => (
-      <div
-        key={index}
-        className={`w-[30px] h-[30px] border-[1px] border-[rgba(0,_0,_0,_0.15)]`}
-        style={{ backgroundColor: offer.color }}
-      ></div>
-    ));
+    let seen = new Set();
+
+    return phoneData.phoneoffers
+      .filter((item) => {
+        if (!seen.has(item.color)) {
+          seen.add(item.color);
+          return true;
+        }
+        return false;
+      })
+      .map((offer) => offer.color);
   }, [phoneData]);
 
-  const renderStorages = useMemo(() => {
+  const storageOptions = useMemo(() => {
     if (!phoneData || !Array.isArray(phoneData?.phoneoffers)) {
-      return <></>;
+      return [];
     }
 
-    return phoneData.phoneoffers.map((offer, index) => (
-      <div
-        key={index}
-        className={`h-[30px] border-[1px] border-[rgba(0,_0,_0,_0.15)] pr-[20px] pl-[17px] flex items-center`}
-      >
-        {offer.storage}
-      </div>
-    ));
+    let seen = new Set();
+
+    return phoneData.phoneoffers
+      .filter((item) => {
+        if (!seen.has(item.storage)) {
+          seen.add(item.storage);
+          return true;
+        }
+        return false;
+      })
+      .map((offer) => offer.storage);
   }, [phoneData]);
 
   const renderProfile = useMemo(() => {
@@ -168,6 +184,29 @@ export function PhoneSite({ user }) {
       </tr>
     ));
   }, [phoneProfile]);
+
+  useEffect(() => {
+    if (phoneData?.phoneoffers) {
+      if (colorSelect) {
+        const accepts = phoneData.phoneoffers.filter(
+          (p) => p.color === colorSelect
+        );
+        const ds = [];
+        storageOptions.forEach((stotage, index) => {
+          const hasStorage = accepts.find((a) => a.storage === stotage);
+          if (hasStorage) {
+            ds[index] = false;
+          } else {
+            ds[index] = true;
+          }
+        });
+        setDisables((prev) => ({
+          ...prev,
+          storage: ds,
+        }));
+      }
+    }
+  }, [storageOptions, colorOptions, colorSelect, storageSelect]);
 
   const renderDescription = useMemo(() => {
     if (!phoneDescription) {
@@ -195,6 +234,15 @@ export function PhoneSite({ user }) {
       );
     });
   }, [phoneDescription]);
+
+  const offerSelected = useMemo(
+    () =>
+      phoneData?.phoneoffers &&
+      phoneData?.phoneoffers.find(
+        (po) => po.color === colorSelect && po.storage === storageSelect
+      ),
+    [colorSelect, storageSelect, phoneData?.phoneoffers]
+  );
 
   if (!phoneData) {
     return <></>;
@@ -236,10 +284,37 @@ export function PhoneSite({ user }) {
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <div className="flex gap-2">{renderColors}</div>
+                <div className="flex gap-2">
+                  <RadioGroup
+                    value={colorSelect}
+                    onChange={setColorSelect}
+                    options={colorOptions}
+                    disables={disables.colors}
+                  >
+                    {(e) => (
+                      <div
+                        className={`w-[30px] h-[30px] border-[1px] border-[rgba(0,_0,_0,_0.15)]`}
+                        style={{ backgroundColor: e }}
+                      ></div>
+                    )}
+                  </RadioGroup>
+                </div>
               </div>
               <div className="flex items-center gap-2">
-                <div className="flex gap-2">{renderStorages}</div>
+                <div className="flex gap-2">
+                  <RadioGroup
+                    value={storageSelect}
+                    onChange={setStorageSelect}
+                    options={storageOptions}
+                    disables={disables.storage}
+                  >
+                    {(e) => (
+                      <div className="h-[30px] border-[1px] border-[rgba(0,_0,_0,_0.15)] pr-[20px] pl-[17px] flex items-center">
+                        {e}
+                      </div>
+                    )}
+                  </RadioGroup>
+                </div>
               </div>
               <div className="flex items-center">
                 <div className="flex">
@@ -287,9 +362,19 @@ export function PhoneSite({ user }) {
                 <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#5d83db]">
                   <TiShoppingCart size={20} /> Thêm vào giỏ hàng
                 </button>
-                <button className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#fa9d4d]">
-                  Mua ngay
-                </button>
+                <BuyPhoneModal
+                  offer={offerSelected}
+                  storeId={phoneData?.storeId}
+                  userId={user?.uid}
+                  data={phoneData}
+                >
+                  <button
+                    className="flex gap-2 w-[calc(50%_-_4px)] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#fa9d4d] disabled:opacity-50"
+                    disabled={!offerSelected}
+                  >
+                    Mua ngay
+                  </button>
+                </BuyPhoneModal>
               </div>
               <div>
                 <button className="flex flex-col w-[100%] h-[50px] items-center justify-center text-[white] rounded-[10px] bg-[#5d83db]">

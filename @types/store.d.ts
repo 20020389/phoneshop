@@ -39,7 +39,22 @@ interface PhoneOffer {
   count: number;
   color: string;
   storage: string;
+  uid: string;
 }
+
+type TransactionStatus = 'PROCESSING' | 'SUCCESS' | 'REFUSE';
+
+type Transaction = {
+  id: number;
+  uid: string;
+  status: TransactionStatus;
+  userId: string | null;
+  updateAt: Date;
+  createAt: Date;
+  storeId: number;
+  products: (PhoneOffer & { name: string })[];
+  store: StoreData;
+};
 
 type Cart<T = string[]> = {
   uid: string;
