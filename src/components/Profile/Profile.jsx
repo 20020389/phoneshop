@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { EditProfile } from './EditProfile';
 import { ListStore } from './ListStore';
 import { Outlet } from 'react-router-dom';
+import { StoreNavigate } from './StoreNavigate';
 
 /**
  *

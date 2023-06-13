@@ -15,6 +15,7 @@ import { ListStore } from './components/Profile/ListStore';
 import { StorePage } from './pages/Store';
 import PhonePage from './pages/Phone';
 import { ListTransaction } from './components/Profile/ListTransaction';
+import { ListStoreTransaction } from './components/Profile/ListStoreTransaction';
 
 function App() {
   const { user, loading, setUser } = useStore();
@@ -65,6 +66,10 @@ function App() {
         {user?.role === 'STORE' ? (
           <>
             <Route path="store/:storeid" element={<StorePage />} />
+            <Route
+              path="store/:storeid/transactions"
+              element={<ListStoreTransaction />}
+            />
             <Route path="" element={<ListStore />} />
           </>
         ) : (

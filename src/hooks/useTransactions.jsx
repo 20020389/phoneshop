@@ -10,7 +10,7 @@ import useSWR from 'swr';
  *  mutate: () => void;
  * }}
  */
-export function userTransactions() {
+export function useTransactions() {
   const { data, isLoading, error, mutate } = useSWR('/api/transaction');
 
   return {

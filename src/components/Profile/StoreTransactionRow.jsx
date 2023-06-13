@@ -12,7 +12,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { BiCheck } from 'react-icons/bi';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { IoClose } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { http } from '../../lib/axios';
 import { convertTime } from '../../lib/util';
@@ -28,22 +30,26 @@ import { StoreHandle } from './StoreHanle';
  * }} param0
  * @returns
  */
-export function TransactionRow({ data, index, refresh }) {
+export function StoreTransactionRow({ data, index, refresh }) {
   const toast = useToast();
-  const [isOpenDelete, setIsOpenDelete] = useState(false);
-  const [isDeleting, setDeleting] = useState(false);
+  const [isOpenUpdate, setIsOpenUpdate] = useState(false);
+  const [isUpdating, setUpdating] = useState(false);
 
-  function deleteStore() {
-    setDeleting(true);
+  const [selectedStatus, setSelectedStatus] = useState('SUCCESS');
+
+  function updateTransactionStatus(status) {
+    setUpdating(true);
     http
-      .delete(`/api/transaction/${data.uid}`)
+      .post(`/api/store/id/${data.store?.uid}/transactions/${data.uid}`, {
+        status,
+      })
       .then(() => {
         toast({
-          description: 'Xóa đơn hàng thành công',
+          description: 'Cập nhật đơn hàng thành công',
           status: 'success',
         });
         refresh();
-        setIsOpenDelete(false);
+        setIsOpenUpdate(false);
       })
       .catch(() => {
         toast({
@@ -51,7 +57,7 @@ export function TransactionRow({ data, index, refresh }) {
           status: 'error',
         });
       })
-      .finally(() => setDeleting(false));
+      .finally(() => setUpdating(false));
   }
 
   return (
@@ -109,48 +115,68 @@ export function TransactionRow({ data, index, refresh }) {
           </Tooltip>
         </td>
         <td className="items-center">
-          <div className="w-full h-full flex items-center justify-center gap-3">
-            <button
-              className="text-red-400"
-              onClick={() => setIsOpenDelete(true)}
-            >
-              <FaTrashAlt size="1.1em" />
-            </button>
-          </div>
+          {data.status === 'PROCESSING' && (
+            <div className="w-full h-full flex items-center justify-center gap-3">
+              <button
+                className="text-green-400"
+                onClick={() => {
+                  setIsOpenUpdate(true);
+                  setSelectedStatus('SUCCESS');
+                }}
+              >
+                <BiCheck size="1.5em" />
+              </button>
+              <button
+                className="text-red-400"
+                onClick={() => {
+                  setIsOpenUpdate(true);
+                  setSelectedStatus('REFUSE');
+                }}
+              >
+                <IoClose size="1.5em" />
+              </button>
+            </div>
+          )}
         </td>
       </tr>
       <Modal
-        isOpen={isOpenDelete}
+        isOpen={isOpenUpdate}
         onClose={() => {
-          setIsOpenDelete(false);
+          setIsOpenUpdate(false);
         }}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Text>Xóa cửa hàng</Text>
+            <Text>Cập nhật đơn hàng</Text>
           </ModalHeader>
           <ModalBody>
             <Text>
-              Bạn có chắc chắn muốn xóa đơn hàng với sản phẩm{' '}
-              <span className="font-bold">{data.products?.at(0).name}</span>
+              Bạn có chắc chắn muốn cập nhật đơn hàng với sản phẩm{' '}
+              <span className="font-bold">{data.products?.at(0).name}</span>{' '}
+              thành{' '}
+              <Badge
+                colorScheme={selectedStatus === 'SUCCESS' ? 'green' : 'red'}
+              >
+                {selectedStatus === 'SUCCESS' ? 'Thành công' : 'Thất bại'}
+              </Badge>
             </Text>
           </ModalBody>
           <ModalFooter gap="10px">
             <Button
               variant="ghost"
               onClick={() => {
-                setIsOpenDelete(false);
+                setIsOpenUpdate(false);
               }}
             >
               Hủy
             </Button>
             <Button
-              colorScheme="red"
-              onClick={deleteStore}
-              isLoading={isDeleting}
+              colorScheme="yellow"
+              onClick={() => updateTransactionStatus(selectedStatus)}
+              isLoading={isUpdating}
             >
-              Xóa
+              Đồng ý
             </Button>
           </ModalFooter>
         </ModalContent>

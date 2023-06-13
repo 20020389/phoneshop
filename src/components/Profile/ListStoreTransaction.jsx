@@ -1,17 +1,22 @@
 import { Input, InputGroup, InputLeftElement, Select } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { IoArrowBackOutline } from 'react-icons/io5';
 import { MdRefresh } from 'react-icons/md';
+import { Link, useParams } from 'react-router-dom';
+import { useStoreTransaction } from '../../hooks/useStoreTransactions';
 import { useTransactions } from '../../hooks/useTransactions';
+import { StoreTransactionRow } from './StoreTransactionRow';
 import { TransactionRow } from './TransactionRow';
 
-/**
- *
- * @param {{
- *  user: User
- * }} param0
- */
-export function ListTransaction({ user }) {
-  const { transactions, mutate } = useTransactions();
+// /**
+//  *
+//  * @param {{
+//  *  user: User
+//  * }} param0
+//  */
+export function ListStoreTransaction() {
+  const query = useParams();
+  const { transactions, mutate } = useStoreTransaction(query.storeid);
   const [filter, setFilter] = useState({
     status: '',
     name: '',
@@ -26,7 +31,12 @@ export function ListTransaction({ user }) {
       <div className="shadow-[0px_5px_5px_rgba(0,_0,_0,_0.1)] bg-[white] flex-grow rounded-[10px] overflow-hidden">
         <div className="min-h-[400px]">
           <div className="w-full p-[15px_20px_10px_20px] flex items-center justify-end gap-4">
-            <div className="flex flex-grow font-[600]">Đơn hàng của bạn</div>
+            <div className="flex flex-grow gap-3 font-[600]">
+              <Link to={`/profile/store/${query.storeid}`}>
+                <IoArrowBackOutline size="20px" />
+              </Link>{' '}
+              Đơn hàng của bạn
+            </div>
             <InputGroup className="!w-min">
               <InputLeftElement className="!h-[35px]">
                 <svg
@@ -91,7 +101,7 @@ export function ListTransaction({ user }) {
                   <th>Khu vực</th>
                   <th>Update At</th>
                   <th>Create At</th>
-                  <th className="w-[60px]"></th>
+                  <th className="w-[80px]"></th>
                 </tr>
               </thead>
               <tbody>
@@ -115,7 +125,7 @@ export function ListTransaction({ user }) {
                     return true;
                   })
                   .map((item, index) => (
-                    <TransactionRow
+                    <StoreTransactionRow
                       key={index}
                       data={item}
                       index={index}

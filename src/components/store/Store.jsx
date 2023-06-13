@@ -40,7 +40,12 @@ export function Store() {
           <FiChevronRight />
           <Text fontWeight="500">{data.name}</Text>
         </div>
-        <div>
+        <div className="flex items-center gap-2">
+          <Link to="transactions">
+            <Button className="" variant="outline">
+              Danh sách giao dịch
+            </Button>
+          </Link>
           <MyButton onClick={() => setOpenAddProduct(true)}>
             Thêm sản phẩm
           </MyButton>
