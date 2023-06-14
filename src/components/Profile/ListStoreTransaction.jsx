@@ -95,8 +95,8 @@ export function ListStoreTransaction() {
                 <tr className="h-[50px] bg-[#f9e3aa]">
                   <th className="w-[80px]">#</th>
                   <th>Tên sản phẩm</th>
+                  <th>Người mua</th>
                   <th>Trạng thái</th>
-                  <th>Cửa hàng</th>
                   <th>Địa chỉ</th>
                   <th>Khu vực</th>
                   <th>Update At</th>

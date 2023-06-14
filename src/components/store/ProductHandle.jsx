@@ -61,20 +61,25 @@ function ProductHandleState({
 
   async function submit(e) {
     setUploading(true);
-    const images = await uploadRef.current?.submit();
-    const offers = await offersRef.current?.submit();
-    e.images = JSON.stringify(images);
-    e.phoneoffers = offers;
-    http
-      .post(`/api/store/id/${storeId}/phones`, e)
-      .then((res) => {
-        console.log(res);
-        onClose();
-        refetch && refetch();
-      })
-      .catch((err) => {
-        setUploading(false);
-      });
+    try {
+      const images = await uploadRef.current?.submit();
+      const offers = await offersRef.current?.submit();
+      e.images = JSON.stringify(images);
+      e.phoneoffers = offers;
+      http
+        .post(`/api/store/id/${storeId}/phones`, e)
+        .then((res) => {
+          console.log(res);
+          onClose();
+          refetch && refetch();
+        })
+        .catch((err) => {
+          setUploading(false);
+        });
+    } catch (error) {
+    } finally {
+      setUploading(false);
+    }
   }
 
   return (

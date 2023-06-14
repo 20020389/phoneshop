@@ -53,6 +53,7 @@ type Transaction = {
   createAt: Date;
   storeId: number;
   products: (PhoneOffer & { name: string })[];
+  user: User;
   store: StoreData;
 };
 
@@ -73,4 +74,9 @@ interface PhoneProfile {
 interface PhoneDescription {
   title: string;
   content: string;
+}
+
+interface SearchData {
+  phones: Phone<string>[];
+  lastCalled: number;
 }
