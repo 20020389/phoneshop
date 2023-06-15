@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../CSS/header1.css';
 import { useStore } from '../lib/zustand';
 import Cart from './Cart';
+import { SearchPhone } from './SearchPhone';
 
 /**
  *
@@ -113,6 +114,8 @@ function Header1({}) {
               </button>
             </InputRightElement>
           </InputGroup>
+          <SearchPhone />
+
         </div>
 
         {!user ? (

@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import lodash from 'lodash';
 import {
   forwardRef,
@@ -14,6 +14,7 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
   /**@type {State<PhoneOfferType[]>} */
   const [offers, setOffers] = useState(defaultValue ?? []);
   const offersRef = useRef([]);
+  const toast = useToast();
 
   useImperativeHandle(ref, () => ({
     submit: async () => {
@@ -22,6 +23,11 @@ function PhoneOffersBase({ defaultValue, onChange }, ref) {
         const data = { ...(await item.submit()) };
         delete data.key;
         list.push(data);
+      }
+
+      if (list.length === 0) {
+        toast({ description: 'Cần ít nhất 1 offer', status: 'error' });
+        throw Error('offer cannot null');
       }
       return list;
     },

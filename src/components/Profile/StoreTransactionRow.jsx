@@ -78,6 +78,7 @@ export function StoreTransactionRow({ data, index, refresh }) {
             </div>
           </BuyPhoneModal>
         </td>
+        <td className="font-[500] text-center">{data.user?.name}</td>
         <td className="font-[500] text-center">
           {data.status === 'PROCESSING' ? (
             <Badge colorScheme="blue" className="!p-[3px_10px] !text-[12px]">
@@ -93,7 +94,7 @@ export function StoreTransactionRow({ data, index, refresh }) {
             </Badge>
           )}
         </td>
-        <td className="font-[500] text-center">{data.store?.name}</td>
+
         <td className="font-[500] text-center">{data.store?.location}</td>
         <td className="font-[500] text-center">{data.store?.group}</td>
         <td className="font-[500] text-center">

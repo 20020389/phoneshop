@@ -147,3 +147,10 @@ div[data-popper-arrow] > div.chakra-popover__arrow {
   width: 8px;
   background: #cecece;
 }
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
