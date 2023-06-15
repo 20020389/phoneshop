@@ -97,7 +97,7 @@ function Header1({}) {
               <button
                 className="w-full h-full flex items-center justify-center 
                     cursor-pointer hover:border-transparent focus:outline-none"
-                onClick={() => navigate('/search/content')}
+                onClick={() => navigate('/search')}
               >
                 <svg
                   viewBox="-1 -1 26 26"

@@ -85,7 +85,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Navigate to="/" />} />
       <Route path="/register" element={<Navigate to="/" />} />
-      <Route path="/*" element={<div>404 not found</div>} />
+      <Route path="/*" element={<div>404 not found. in progress</div>} />
     </Routes>
   );
 }
